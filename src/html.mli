@@ -41,7 +41,7 @@ val head : (* ?styles: style list -> *)
 type body
 type 'a element
 
-val p : ('a element -> 'a) element
+val p : string -> ('a element -> 'a) element
 
 val body : 'a element -> 'a
 val body_end : body element
