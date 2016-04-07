@@ -25,8 +25,8 @@ type rel_value =
 type link
 val link : ?href:  string -> (* Some better idea? *)
            ?media: media ->
-           ~rel:   rel_value ->
-           link
+           rel:    rel_value ->
+           unit -> link
 
 type head
 val head : (* ?styles: style list -> *)
@@ -35,7 +35,7 @@ val head : (* ?styles: style list -> *)
            (* ?metas: meta list -> *)
            (* ?scripts: scrupt list -> *)
            (* ?noscripts? *)
-           ~title: string ->
+           title: string ->
            head
 
 type body
@@ -48,3 +48,5 @@ val body_end : body element
 
 type html
 val html : head -> body -> html
+
+val export : html -> string
