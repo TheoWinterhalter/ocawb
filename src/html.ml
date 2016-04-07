@@ -11,7 +11,12 @@ type media_value =
   | Media_screen
   | Media_tty
   | Media_tv
-  | Media_min_width of string
+  | Media_min_width  of string
+  | Media_max_width  of string
+  | Media_width      of string
+  | Media_min_height of string
+  | Media_max_height of string
+  | Media_height     of string
 
 let export_media_value v =
   match v with
@@ -24,7 +29,12 @@ let export_media_value v =
   | Media_screen     -> "screen"
   | Media_tty        -> "tty"
   | Media_tv         -> "tv"
-  | Media_min_width s -> "(min-width:" ^ s ^ ")"
+  | Media_min_width  s -> "(min-width:" ^ s ^ ")"
+  | Media_max_width  s -> "(max-width:" ^ s ^ ")"
+  | Media_width      s -> "(width:" ^ s ^ ")"
+  | Media_min_height s -> "(min-height:" ^ s ^ ")"
+  | Media_max_height s -> "(max-height:" ^ s ^ ")"
+  | Media_height     s -> "(height:" ^ s ^ ")"
 
 type media =
   | Media_or  of media * media
@@ -77,7 +87,7 @@ type head = {
   title : string
 }
 
-let head ?links:(links=[]) ~title = {
+let head ?links:(links=[]) ~title () = {
   links ;
   title
 }
@@ -88,29 +98,75 @@ let export_head head =
   (List.fold_left (fun a b -> a ^ export_link tabtab b) "" head.links) ^
   tab ^ "</head>\n"
 
+type target =
+  | Target_blank
+  | Target_parent
+  | Target_self
+  | Target_top
+
+let export_target = function
+  | Target_blank  -> "_blank"
+  | Target_parent -> "_parent"
+  | Target_self   -> "_self"
+  | Target_top    -> "_top"
+
+type a_info = {
+  href : string option ;
+  download : string option ;
+  target : target option
+}
+
+let export_a_info i =
+  (match i.href with
+   | None -> ""
+   | Some u -> " href=\"" ^ u ^ "\"") ^
+  (match i.download with
+   | None -> ""
+   | Some v -> " download=\"" ^ v ^ "\"") ^
+  (match i.target with
+   | None -> ""
+   | Some v -> " target=\"" ^ (export_target v) ^ "\"")
+
 (* We could enrich it with a supertype to add general attributes. *)
 (* This also might be insufficient as we may want users to define their own
  * tags. *)
 type body_tag =
   | Tag_p of string
+  | Tag_a of a_info * body_tag list
 
 type body = body_tag list
 
 type 'a element = body -> 'a
+type 'a k = 'a element -> 'a
+
+(* let a ?href ?download ?target elt =
+  elt []
+
+let enda content k =
+  k (Tag_a ({ href ; download ; target }, inside) :: content) *)
 
 let p s content k = k (Tag_p s :: content)
+
+(* let close k = k [] *)
 
 let body k = k []
 
 let body_end content = content
 
-let export_tag indent tag =
+let rec export_content indent content =
+  List.fold_left (fun a b -> a ^ (export_tag indent b)) "" (List.rev content)
+
+and export_tag indent tag = indent ^
   match tag with
-  | Tag_p s -> indent ^ "<p>" ^ s ^ "</p>\n"
+  | Tag_p s -> "<p>" ^ s ^ "</p>\n"
+  | Tag_a (i,c) ->
+    "<a" ^ (export_a_info i) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</a>"
 
 let export_body body =
   tab ^ "<body>\n" ^
-  (List.fold_left (fun a b -> a ^ (export_tag tabtab b)) "" (List.rev body)) ^
+  (export_content tabtab body) ^
   tab ^ "</body>\n"
 
 type html = {
