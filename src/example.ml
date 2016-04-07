@@ -8,7 +8,7 @@ let my_body =
   body
     (p "We write paragraphs!")
     (p "Because for now this is the only thing we can do.")
-    (p "Let's hope this works!")
+    (p "It indeed works!")
   body_end
 
 let my_html =
