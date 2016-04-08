@@ -9,6 +9,10 @@ let my_body =
     (p "We write paragraphs!")
     (a ~href:"index.html" ~download:"filename" ~target:Target_self
       (p "We can also add [p] inside [a]")
+      (a
+        (p "This is just for show but we also put anchors in anchors.")
+        (p "Isn't that all nice?")
+      close)
       (p "Isn't it awesome?")
     close)
     (p "Because for now this is the only thing we can do.")
