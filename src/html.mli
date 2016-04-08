@@ -56,7 +56,7 @@ val a : ?href : string ->
         ?download : string ->
         ?target : target ->
         'a element -> 'a
-val enda : 'a k element element
+val close : 'a k element element
 val p : string -> 'a k element
 
 val body : 'a element -> 'a

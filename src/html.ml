@@ -135,19 +135,22 @@ type body_tag =
   | Tag_a of a_info * body_tag list
 
 type body = body_tag list
+type content = body * (body -> body_tag)
 
-type 'a element = body -> 'a
+type 'a element = content -> 'a
 type 'a k = 'a element -> 'a
 
-let a ?href ?download ?target elt = elt []
-let enda c1 c2 k =
-  k (Tag_a ({ href = None ; download = None ; target = None }, c1) :: c2)
+let a ?href ?download ?target elt =
+  elt ([], fun c -> Tag_a ({ href ; download ; target }, c))
 
-let p s content k = k (Tag_p s :: content)
+let close (c1,h1) (c2,h2) k =
+  k ((h1 c1) :: c2, h2)
 
-let body elt = elt []
+let p s (c,h) k = k (Tag_p s :: c, h)
 
-let body_end c = c
+let body elt = elt ([], fun c -> assert false)
+
+let body_end (c,_) = c
 
 let rec export_content indent content =
   List.fold_left (fun a b -> a ^ (export_tag indent b)) "" (List.rev content)

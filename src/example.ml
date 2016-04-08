@@ -10,7 +10,7 @@ let my_body =
     (a ~href:"index.html" ~download:"filename" ~target:Target_self
       (p "We can also add [p] inside [a]")
       (p "Isn't it awesome?")
-    enda)
+    close)
     (p "Because for now this is the only thing we can do.")
     (p "It indeed works!")
   body_end
