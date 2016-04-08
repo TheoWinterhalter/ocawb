@@ -139,19 +139,15 @@ type body = body_tag list
 type 'a element = body -> 'a
 type 'a k = 'a element -> 'a
 
-(* let a ?href ?download ?target elt =
-  elt []
-
-let enda content k =
-  k (Tag_a ({ href ; download ; target }, inside) :: content) *)
+let a ?href ?download ?target elt = elt []
+let enda c1 c2 k =
+  k (Tag_a ({ href = None ; download = None ; target = None }, c1) :: c2)
 
 let p s content k = k (Tag_p s :: content)
 
-(* let close k = k [] *)
+let body elt = elt []
 
-let body k = k []
-
-let body_end content = content
+let body_end c = c
 
 let rec export_content indent content =
   List.fold_left (fun a b -> a ^ (export_tag indent b)) "" (List.rev content)
@@ -162,7 +158,7 @@ and export_tag indent tag = indent ^
   | Tag_a (i,c) ->
     "<a" ^ (export_a_info i) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
-    indent ^ "</a>"
+    indent ^ "</a>\n"
 
 let export_body body =
   tab ^ "<body>\n" ^
