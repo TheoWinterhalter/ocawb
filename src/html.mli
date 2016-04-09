@@ -56,8 +56,12 @@ val a : ?href: string ->
         ?download: string ->
         ?target: target ->
         'a element -> 'a
+(* TODO Allow to be in text (and nothing else right?) *)
 val abbr : ?title: string -> string -> 'a k element
 val address : 'a element -> 'a
+(* area TODO? *)
+val article : 'a element -> 'a
+(* TODO Accept more than text *)
 val p : string -> 'a k element
 val close : 'a k element element
 

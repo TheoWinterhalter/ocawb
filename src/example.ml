@@ -22,8 +22,10 @@ let my_html =
         close)
         (p "Isn't it awesome?")
       close)
-      (p "Because for now this is the only thing we can do.")
-      (p "It indeed works!")
+      (article
+        (p "Because for now this is the only thing we can do.")
+        (p "It indeed works!")
+      close)
     body_end)
 
 let () =

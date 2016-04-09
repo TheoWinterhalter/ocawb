@@ -141,16 +141,17 @@ let export_abbr_info i =
  * tags. *)
 type body_tag =
   | Tag_p of string
-  | Tag_a of a_info * body_tag list
+  | Tag_a of a_info * body
   | Tag_abbr of abbr_info * string
-  | Tag_address of body_tag list
-
-type body = body_tag list
+  | Tag_address of body
+  | Tag_article of body
+and body = body_tag list
 type content = body * (body -> body_tag)
 
 type 'a element = content -> 'a
 type 'a k = 'a element -> 'a
 
+(* TODO Something more generic? *)
 let a ?href ?download ?target elt =
   elt ([], fun c -> Tag_a ({ href ; download ; target }, c))
 
@@ -158,6 +159,9 @@ let abbr ?title s (c,h) k = k (Tag_abbr ({ title }, s) :: c, h)
 
 let address elt =
   elt ([], fun c -> Tag_address c)
+
+let article elt =
+  elt ([], fun c -> Tag_article c)
 
 let p s (c,h) k = k (Tag_p s :: c, h)
 
@@ -171,6 +175,7 @@ let body_end (c,_) = c
 let rec export_content indent content =
   List.fold_left (fun a b -> a ^ (export_tag indent b)) "" (List.rev content)
 
+(* TODO Make a generic function? *)
 and export_tag indent tag = indent ^
   match tag with
   | Tag_a (i,c) ->
@@ -183,6 +188,10 @@ and export_tag indent tag = indent ^
     "<address>\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</address>\n"
+  | Tag_article c ->
+    "<article>\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</article>\n"
   | Tag_p s -> "<p>" ^ s ^ "</p>\n"
 
 let export_body body =
