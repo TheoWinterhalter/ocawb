@@ -52,12 +52,14 @@ type target =
   | Target_self
   | Target_top
 
-val a : ?href : string ->
-        ?download : string ->
-        ?target : target ->
+val a : ?href: string ->
+        ?download: string ->
+        ?target: target ->
         'a element -> 'a
-val close : 'a k element element
+val abbr : ?title: string -> string -> 'a k element
+val address : 'a element -> 'a
 val p : string -> 'a k element
+val close : 'a k element element
 
 val body : 'a element -> 'a
 val body_end : body element

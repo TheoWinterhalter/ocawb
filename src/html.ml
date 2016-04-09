@@ -127,12 +127,23 @@ let export_a_info i =
    | None -> ""
    | Some v -> " target=\"" ^ (export_target v) ^ "\"")
 
+type abbr_info = {
+  title : string option
+}
+
+let export_abbr_info i =
+  (match i.title with
+   | None -> ""
+   | Some t -> " title=\"" ^ t ^ "\"")
+
 (* We could enrich it with a supertype to add general attributes. *)
 (* This also might be insufficient as we may want users to define their own
  * tags. *)
 type body_tag =
   | Tag_p of string
   | Tag_a of a_info * body_tag list
+  | Tag_abbr of abbr_info * string
+  | Tag_address of body_tag list
 
 type body = body_tag list
 type content = body * (body -> body_tag)
@@ -143,10 +154,15 @@ type 'a k = 'a element -> 'a
 let a ?href ?download ?target elt =
   elt ([], fun c -> Tag_a ({ href ; download ; target }, c))
 
-let close (c1,h1) (c2,h2) k =
-  k ((h1 c1) :: c2, h2)
+let abbr ?title s (c,h) k = k (Tag_abbr ({ title }, s) :: c, h)
+
+let address elt =
+  elt ([], fun c -> Tag_address c)
 
 let p s (c,h) k = k (Tag_p s :: c, h)
+
+let close (c1,h1) (c2,h2) k =
+  k ((h1 c1) :: c2, h2)
 
 let body elt = elt ([], fun c -> assert false)
 
@@ -157,11 +173,17 @@ let rec export_content indent content =
 
 and export_tag indent tag = indent ^
   match tag with
-  | Tag_p s -> "<p>" ^ s ^ "</p>\n"
   | Tag_a (i,c) ->
     "<a" ^ (export_a_info i) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</a>\n"
+  | Tag_abbr (i,s) ->
+    "<abbr" ^ (export_abbr_info i) ^ ">" ^ s ^ "</abbr>\n"
+  | Tag_address c ->
+    "<address>\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</address>\n"
+  | Tag_p s -> "<p>" ^ s ^ "</p>\n"
 
 let export_body body =
   tab ^ "<body>\n" ^

@@ -15,6 +15,10 @@ let my_html =
         (a
           (p "This is just for show but we also put anchors in anchors.")
           (p "Isn't that all nice?")
+          (abbr ~title:"Oh My God" "OMG")
+          (address
+            (p "Maybe we don't want to put [p] inside [address].")
+          close)
         close)
         (p "Isn't it awesome?")
       close)
