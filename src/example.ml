@@ -26,6 +26,13 @@ let my_html =
         (p "Because for now this is the only thing we can do.")
         (p "It indeed works!")
       close)
+      (aside
+        (p "This is some aside, so wonderful.")
+        (blockquote ~cite:"lulz.com"
+          (p "Everything is better than HTML...")
+          (p "-- Somebody dead")
+        close)
+      close)
     body_end)
 
 let () =

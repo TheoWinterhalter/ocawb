@@ -61,6 +61,10 @@ val abbr : ?title: string -> string -> 'a k element
 val address : 'a element -> 'a
 (* area TODO? *)
 val article : 'a element -> 'a
+val aside : 'a element -> 'a
+(* TODO audio tag *)
+(* TODO b ; decide how to treat "rich" text *)
+val blockquote : ?cite: string -> 'a element -> 'a
 (* TODO Accept more than text *)
 val p : string -> 'a k element
 val close : 'a k element element

@@ -136,6 +136,15 @@ let export_abbr_info i =
    | None -> ""
    | Some t -> " title=\"" ^ t ^ "\"")
 
+type blockquote_info = {
+  cite : string option
+}
+
+let export_blockquote_info i =
+  (match i.cite with
+   | None -> ""
+   | Some u -> " cite=\"" ^ u ^ "\"")
+
 (* We could enrich it with a supertype to add general attributes. *)
 (* This also might be insufficient as we may want users to define their own
  * tags. *)
@@ -145,6 +154,8 @@ type body_tag =
   | Tag_abbr of abbr_info * string
   | Tag_address of body
   | Tag_article of body
+  | Tag_aside of body
+  | Tag_blockquote of blockquote_info * body
 and body = body_tag list
 type content = body * (body -> body_tag)
 
@@ -162,6 +173,12 @@ let address elt =
 
 let article elt =
   elt ([], fun c -> Tag_article c)
+
+let aside elt =
+  elt ([], fun c -> Tag_aside c)
+
+let blockquote ?cite elt =
+  elt ([], fun c -> Tag_blockquote ({ cite }, c))
 
 let p s (c,h) k = k (Tag_p s :: c, h)
 
@@ -192,6 +209,14 @@ and export_tag indent tag = indent ^
     "<article>\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</article>\n"
+  | Tag_aside c ->
+    "<aside>\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</aside>\n"
+  | Tag_blockquote (i,c) ->
+    "<blockquote" ^ (export_blockquote_info i) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</blockquote>\n"
   | Tag_p s -> "<p>" ^ s ^ "</p>\n"
 
 let export_body body =
