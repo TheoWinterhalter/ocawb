@@ -148,6 +148,9 @@ let export_blockquote_info i =
 (* We could enrich it with a supertype to add general attributes. *)
 (* This also might be insufficient as we may want users to define their own
  * tags. *)
+type general_attributes = {
+  accesskey : char option
+}
 type body_tag =
   | Tag_p of string
   | Tag_a of a_info * body
@@ -156,36 +159,42 @@ type body_tag =
   | Tag_article of body
   | Tag_aside of body
   | Tag_blockquote of blockquote_info * body
-and body = body_tag list
-type content = body * (body -> body_tag)
+and body = full_tag list
+and full_tag = general_attributes * body_tag
+type content = body * (body -> full_tag)
 
 type 'a element = content -> 'a
 type 'a k = 'a element -> 'a
+type 'a gentag = ?accesskey: char -> 'a
 
-(* TODO Something more generic? *)
-let a ?href ?download ?target elt =
-  elt ([], fun c -> Tag_a ({ href ; download ; target }, c))
+let mktag tag ?accesskey elt =
+  elt ([], (fun c -> { accesskey } , tag c))
 
-let abbr ?title s (c,h) k = k (Tag_abbr ({ title }, s) :: c, h)
+let a ?href ?download ?target =
+  mktag (fun c -> Tag_a ({ href ; download ; target }, c))
 
-let address elt =
-  elt ([], fun c -> Tag_address c)
+let abbr ?title s (c,h) k =
+  k (({ accesskey = None }, Tag_abbr ({ title }, s)) :: c, h)
 
-let article elt =
-  elt ([], fun c -> Tag_article c)
+let address ?foo =
+  mktag (fun c -> Tag_address c)
 
-let aside elt =
-  elt ([], fun c -> Tag_aside c)
+let article ?foo =
+  mktag (fun c -> Tag_article c)
 
-let blockquote ?cite elt =
-  elt ([], fun c -> Tag_blockquote ({ cite }, c))
+let aside ?foo =
+  mktag (fun c -> Tag_aside c)
 
-let p s (c,h) k = k (Tag_p s :: c, h)
+let blockquote ?cite =
+  mktag (fun c -> Tag_blockquote ({ cite }, c))
+
+let p s (c,h) k =
+  k (({ accesskey = None }, Tag_p s) :: c, h)
 
 let close (c1,h1) (c2,h2) k =
   k ((h1 c1) :: c2, h2)
 
-let body elt = elt ([], fun c -> assert false)
+let body ?foo = mktag (fun c -> assert false)
 
 let body_end (c,_) = c
 
@@ -193,7 +202,7 @@ let rec export_content indent content =
   List.fold_left (fun a b -> a ^ (export_tag indent b)) "" (List.rev content)
 
 (* TODO Make a generic function? *)
-and export_tag indent tag = indent ^
+and export_tag indent (attr,tag) = indent ^
   match tag with
   | Tag_a (i,c) ->
     "<a" ^ (export_a_info i) ^ ">\n" ^

@@ -45,6 +45,7 @@ val head : (* ?styles: style list -> *)
 type body
 type 'a element
 type 'a k = 'a element -> 'a
+type 'a gentag = ?accesskey: char -> 'a
 
 type target =
   | Target_blank
@@ -55,21 +56,21 @@ type target =
 val a : ?href: string ->
         ?download: string ->
         ?target: target ->
-        'a element -> 'a
+        ('a element -> 'a) gentag
 (* TODO Allow to be in text (and nothing else right?) *)
 val abbr : ?title: string -> string -> 'a k element
-val address : 'a element -> 'a
+val address : ?foo:int -> ('a element -> 'a) gentag
 (* area TODO? *)
-val article : 'a element -> 'a
-val aside : 'a element -> 'a
+val article : ?foo:int -> ('a element -> 'a) gentag
+val aside : ?foo:int -> ('a element -> 'a) gentag
 (* TODO audio tag *)
 (* TODO b ; decide how to treat "rich" text *)
-val blockquote : ?cite: string -> 'a element -> 'a
+val blockquote : ?cite: string -> ('a element -> 'a) gentag
 (* TODO Accept more than text *)
 val p : string -> 'a k element
 val close : 'a k element element
 
-val body : 'a element -> 'a
+val body : ?foo:int -> ('a element -> 'a) gentag
 val body_end : body element
 
 type html
