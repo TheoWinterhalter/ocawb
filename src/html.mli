@@ -45,7 +45,9 @@ val head : (* ?styles: style list -> *)
 type body
 type 'a element
 type 'a k = 'a element -> 'a
-type 'a gentag = ?accesskey: char -> 'a
+type 'a gentag = ?accesskey: char ->
+                 ?classes: string ->
+                 ?contenteditable : bool -> 'a
 
 type target =
   | Target_blank

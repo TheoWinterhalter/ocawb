@@ -149,8 +149,22 @@ let export_blockquote_info i =
 (* This also might be insufficient as we may want users to define their own
  * tags. *)
 type general_attributes = {
-  accesskey : char option
+  accesskey : char option ;
+  classes : string option ; (* TODO Use a list instead? *)
+  contenteditable : bool option
 }
+
+let export_generic_attr attr =
+  (match attr.accesskey with
+   | None -> ""
+   | Some a -> Printf.sprintf " accesskey=\"%c\"" a) ^
+  (match attr.classes with
+   | None -> ""
+   | Some a -> Printf.sprintf " class=\"%s\"" a) ^
+  (match attr.contenteditable with
+   | None -> ""
+   | Some a -> Printf.sprintf " contenteditable=\"%b\"" a)
+
 type body_tag =
   | Tag_p of string
   | Tag_a of a_info * body
@@ -165,16 +179,18 @@ type content = body * (body -> full_tag)
 
 type 'a element = content -> 'a
 type 'a k = 'a element -> 'a
-type 'a gentag = ?accesskey: char -> 'a
+type 'a gentag = ?accesskey: char ->
+                 ?classes: string ->
+                 ?contenteditable : bool -> 'a
 
-let mktag tag ?accesskey elt =
-  elt ([], (fun c -> { accesskey } , tag c))
+let mktag tag ?accesskey ?classes ?contenteditable elt =
+  elt ([], (fun c -> { accesskey ; classes ; contenteditable } , tag c))
 
 let a ?href ?download ?target =
   mktag (fun c -> Tag_a ({ href ; download ; target }, c))
 
 let abbr ?title s (c,h) k =
-  k (({ accesskey = None }, Tag_abbr ({ title }, s)) :: c, h)
+  k (({ accesskey = None ; classes = None ; contenteditable = None }, Tag_abbr ({ title }, s)) :: c, h)
 
 let address ?foo =
   mktag (fun c -> Tag_address c)
@@ -189,7 +205,7 @@ let blockquote ?cite =
   mktag (fun c -> Tag_blockquote ({ cite }, c))
 
 let p s (c,h) k =
-  k (({ accesskey = None }, Tag_p s) :: c, h)
+  k (({ accesskey = None ; classes = None ; contenteditable = None }, Tag_p s) :: c, h)
 
 let close (c1,h1) (c2,h2) k =
   k ((h1 c1) :: c2, h2)
@@ -205,28 +221,34 @@ let rec export_content indent content =
 and export_tag indent (attr,tag) = indent ^
   match tag with
   | Tag_a (i,c) ->
-    "<a" ^ (export_a_info i) ^ ">\n" ^
+    "<a" ^ (export_a_info i) ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</a>\n"
   | Tag_abbr (i,s) ->
-    "<abbr" ^ (export_abbr_info i) ^ ">" ^ s ^ "</abbr>\n"
+    "<abbr" ^ (export_abbr_info i) ^ (export_generic_attr attr) ^ ">" ^
+    s ^
+    "</abbr>\n"
   | Tag_address c ->
-    "<address>\n" ^
+    "<address" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</address>\n"
   | Tag_article c ->
-    "<article>\n" ^
+    "<article" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</article>\n"
   | Tag_aside c ->
-    "<aside>\n" ^
+    "<aside" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</aside>\n"
   | Tag_blockquote (i,c) ->
-    "<blockquote" ^ (export_blockquote_info i) ^ ">\n" ^
+    "<blockquote" ^
+      (export_blockquote_info i) ^
+      (export_generic_attr attr) ^
+    ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</blockquote>\n"
-  | Tag_p s -> "<p>" ^ s ^ "</p>\n"
+  | Tag_p s ->
+    "<p" ^ (export_generic_attr attr) ^ ">" ^ s ^ "</p>\n"
 
 let export_body body =
   tab ^ "<body>\n" ^

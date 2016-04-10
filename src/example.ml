@@ -12,7 +12,7 @@ let my_html =
       (p "We write paragraphs!")
       (a ~href:"index.html" ~download:"filename" ~target:Target_self
         (p "We can also add [p] inside [a]")
-        (a
+        (a ~accesskey:'h'
           (p "This is just for show but we also put anchors in anchors.")
           (p "Isn't that all nice?")
           (abbr ~title:"Oh My God" "OMG")
