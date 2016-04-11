@@ -15,7 +15,7 @@ let my_html =
         (a ~accesskey:'h'
           (p @@ r"This is just for show but we also put anchors in anchors.")
           (p @@
-            r"Isn't that all nice?" ++
+            r"Isn't that all nice? " ++
             (abbr ~title:"Oh My God" (r"OMG")))
           (address
             (p @@ r"Maybe we don't want to put [p] inside [address].")

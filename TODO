@@ -1,0 +1,10 @@
+HTML:
+  ☐ More attributes
+  ☐ More tags
+  ☐ Generic way of handling attributes?
+  ☐ <address> should ask for rich text as well
+  ☐ Better syntax for rich text? (continuations again?)
+  ☐ Enrich text to be able to contain <a> for instance
+  ☐ Or remove <a> from usual tags
+  ☐ Add a lift operator to make a block out of something?
+  ☐ Add generic attributes to rich text tags
