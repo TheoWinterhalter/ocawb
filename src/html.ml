@@ -165,10 +165,15 @@ let export_generic_attr attr =
    | None -> ""
    | Some a -> Printf.sprintf " contenteditable=\"%b\"" a)
 
+type text =
+  | Cat of text * text
+  | String of string
+  | Text_abbr of abbr_info * text
+  | Text_b of text
+
 type body_tag =
-  | Tag_p of string
+  | Tag_p of text
   | Tag_a of a_info * body
-  | Tag_abbr of abbr_info * string
   | Tag_address of body
   | Tag_article of body
   | Tag_aside of body
@@ -183,14 +188,17 @@ type 'a gentag = ?accesskey: char ->
                  ?classes: string ->
                  ?contenteditable : bool -> 'a
 
+let r s = String s
+let (++) s1 s2 = Cat (s1,s2)
+let abbr ?title s = Text_abbr ({ title }, s)
+let b s = Text_b s
+
+
 let mktag tag ?accesskey ?classes ?contenteditable elt =
   elt ([], (fun c -> { accesskey ; classes ; contenteditable } , tag c))
 
 let a ?href ?download ?target =
   mktag (fun c -> Tag_a ({ href ; download ; target }, c))
-
-let abbr ?title s (c,h) k =
-  k (({ accesskey = None ; classes = None ; contenteditable = None }, Tag_abbr ({ title }, s)) :: c, h)
 
 let address ?foo =
   mktag (fun c -> Tag_address c)
@@ -204,8 +212,8 @@ let aside ?foo =
 let blockquote ?cite =
   mktag (fun c -> Tag_blockquote ({ cite }, c))
 
-let p s (c,h) k =
-  k (({ accesskey = None ; classes = None ; contenteditable = None }, Tag_p s) :: c, h)
+let p ?accesskey ?classes ?contenteditable s (c,h) k =
+  k (({ accesskey ; classes ; contenteditable }, Tag_p s) :: c, h)
 
 let close (c1,h1) (c2,h2) k =
   k ((h1 c1) :: c2, h2)
@@ -213,6 +221,15 @@ let close (c1,h1) (c2,h2) k =
 let body ?foo = mktag (fun c -> assert false)
 
 let body_end (c,_) = c
+
+let rec export_text = function
+  | Cat (a,b) -> (export_text a) ^ (export_text b)
+  | String s -> s
+  | Text_abbr (i,s) ->
+    "<abbr" ^ (export_abbr_info i) ^ ">" ^
+    (export_text s) ^
+    "</abbr>"
+  | Text_b s -> "<b>" ^ (export_text s) ^ "</b>"
 
 let rec export_content indent content =
   List.fold_left (fun a b -> a ^ (export_tag indent b)) "" (List.rev content)
@@ -224,10 +241,6 @@ and export_tag indent (attr,tag) = indent ^
     "<a" ^ (export_a_info i) ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</a>\n"
-  | Tag_abbr (i,s) ->
-    "<abbr" ^ (export_abbr_info i) ^ (export_generic_attr attr) ^ ">" ^
-    s ^
-    "</abbr>\n"
   | Tag_address c ->
     "<address" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
@@ -248,7 +261,9 @@ and export_tag indent (attr,tag) = indent ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</blockquote>\n"
   | Tag_p s ->
-    "<p" ^ (export_generic_attr attr) ^ ">" ^ s ^ "</p>\n"
+    "<p" ^ (export_generic_attr attr) ^ ">" ^
+    (export_text s) ^
+    "</p>\n"
 
 let export_body body =
   tab ^ "<body>\n" ^

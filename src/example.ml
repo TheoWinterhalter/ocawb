@@ -9,28 +9,29 @@ let my_html =
       ]
       ~title:"My first page" ())
     (body
-      (p "We write paragraphs!")
+      (p @@ r"We write paragraphs!")
       (a ~href:"index.html" ~download:"filename" ~target:Target_self
-        (p "We can also add [p] inside [a]")
+        (p @@ r"We can also add [p] inside [a]")
         (a ~accesskey:'h'
-          (p "This is just for show but we also put anchors in anchors.")
-          (p "Isn't that all nice?")
-          (abbr ~title:"Oh My God" "OMG")
+          (p @@ r"This is just for show but we also put anchors in anchors.")
+          (p @@
+            r"Isn't that all nice?" ++
+            (abbr ~title:"Oh My God" (r"OMG")))
           (address
-            (p "Maybe we don't want to put [p] inside [address].")
+            (p @@ r"Maybe we don't want to put [p] inside [address].")
           close)
         close)
-        (p "Isn't it awesome?")
+        (p @@ r"Isn't it awesome?")
       close)
       (article
-        (p "Because for now this is the only thing we can do.")
-        (p "It indeed works!")
+        (p @@ r"Because for now this is the only thing we can do.")
+        (p @@ r"It indeed works!")
       close)
       (aside
-        (p "This is some aside, so wonderful.")
+        (p @@ r"This is some aside, so wonderful.")
         (blockquote ~cite:"lulz.com"
-          (p "Everything is better than HTML...")
-          (p "-- Somebody dead")
+          (p @@ r"Everything is better than HTML...")
+          (p @@ r"-- Somebody dead")
         close)
       close)
     body_end)

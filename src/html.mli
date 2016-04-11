@@ -49,6 +49,13 @@ type 'a gentag = ?accesskey: char ->
                  ?classes: string ->
                  ?contenteditable : bool -> 'a
 
+type text
+
+val r : string -> text
+val (++) : text -> text -> text
+val abbr : ?title: string -> text -> text
+val b : text -> text
+
 type target =
   | Target_blank
   | Target_parent
@@ -59,17 +66,13 @@ val a : ?href: string ->
         ?download: string ->
         ?target: target ->
         ('a element -> 'a) gentag
-(* TODO Allow to be in text (and nothing else right?) *)
-val abbr : ?title: string -> string -> 'a k element
 val address : ?foo:int -> ('a element -> 'a) gentag
 (* area TODO? *)
 val article : ?foo:int -> ('a element -> 'a) gentag
 val aside : ?foo:int -> ('a element -> 'a) gentag
 (* TODO audio tag *)
-(* TODO b ; decide how to treat "rich" text *)
 val blockquote : ?cite: string -> ('a element -> 'a) gentag
-(* TODO Accept more than text *)
-val p : string -> 'a k element
+val p : (text -> 'a k element) gentag
 val close : 'a k element element
 
 val body : ?foo:int -> ('a element -> 'a) gentag
