@@ -4,7 +4,9 @@ The purpose of this repository is to build an ocaml tool to write html.
 The first phase of this work is to reflect (a subset of) HTML in ocaml.  
 Later on, I will try to provide more functionalities.
 
-Thanks to the power of continuations, on currently can write the following
+*This needs some refactoring so no example for now, sorry...*
+
+<!-- Thanks to the power of continuations, on currently can write the following
 ocaml code:
 
 ```ocaml
@@ -85,4 +87,4 @@ To produce the following html:
     </aside>
   </body>
 </html>
-```
+``` -->

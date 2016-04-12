@@ -42,19 +42,15 @@ val head : (* ?styles: style list -> *)
            title: string ->
            unit -> head
 
-type body
-type 'a element
-type 'a k = 'a element -> 'a
+type flow
+type phrasing
+
+type 'a body
+type ('a,'b,'c) element
+type ('a,'b,'c) k = ('a,'b,'c) element -> 'a
 type 'a gentag = ?accesskey: char ->
                  ?classes: string ->
                  ?contenteditable : bool -> 'a
-
-type text
-
-val r : string -> text
-val (++) : text -> text -> text
-val abbr : ?title: string -> text -> text
-val b : text -> text
 
 type target =
   | Target_blank
@@ -62,23 +58,41 @@ type target =
   | Target_self
   | Target_top
 
+(*** DEBUG ***)
+(* This is a comparison of mli type and actual type. *)
+(* They can be matched but with a great overhead... *)
+(* It would be nice to find a way to only make public a nice type! *)
+(***
+val text : string -> phrasing body * 'a -> (phrasing body * 'a -> 'b) -> 'b
+
+val text : string -> (('a,'b,'c) k, 'b,'c) element
+         : string -> ('b,'c) content -> ('a,'b,'c) k
+         : string -> 'b body * ('c body -> 'c full_tag) -> ('a,'b,'c) element -> 'a
+***)
+
+(* Text (normal character data) *)
+(* val text : string -> (('a,'b,'c) k, 'b,'c) element
+
+(* All tags (flow and phrasing mixed) *)
 val a : ?href: string ->
         ?download: string ->
         ?target: target ->
-        ('a element -> 'a) gentag
-val address : ?foo:int -> ('a element -> 'a) gentag
+        (('a,'b,'c) element -> 'a) gentag
+val abbr : ?title: string -> (('a,'b,'c) element -> 'a) gentag
+val address : ?id:string -> (('a,'b,'c) element -> 'a) gentag
 (* area TODO? *)
-val article : ?foo:int -> ('a element -> 'a) gentag
-val aside : ?foo:int -> ('a element -> 'a) gentag
+val article : ?id:string -> (('a,'b,'c) element -> 'a) gentag
+val aside : ?id:string -> (('a,'b,'c) element -> 'a) gentag
 (* TODO audio tag *)
-val blockquote : ?cite: string -> ('a element -> 'a) gentag
-val p : (text -> 'a k element) gentag
-val close : 'a k element element
+val b : ?id:string -> (('a,'b,'c) element -> 'a) gentag
+val blockquote : ?cite: string -> (('a,'b,'c) element -> 'a) gentag
+val p : ?id:string -> (('a,'b,'c) element -> 'a) gentag
+val close : ((('a,'b,'c) k,'b,'c) element,'b,'c) element
 
-val body : ?foo:int -> ('a element -> 'a) gentag
-val body_end : body element
+val body : ?id:string -> (('a,'b,'c) element -> 'a) gentag
+val body_end : (flow body,flow,flow) element *)
 
 type html
-val html : head -> body -> html
+val html : head -> flow body -> html
 
 val export : html -> string

@@ -1,6 +1,6 @@
 open Html
 
-let my_html =
+(* let my_html =
   html
     (head
       ~links:[
@@ -37,4 +37,4 @@ let my_html =
     body_end)
 
 let () =
-  print_string (export my_html)
+  print_string (export my_html) *)
