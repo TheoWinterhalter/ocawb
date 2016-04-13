@@ -1,6 +1,6 @@
 open Html
 
-(* let my_html =
+let my_html =
   html
     (head
       ~links:[
@@ -9,32 +9,41 @@ open Html
       ]
       ~title:"My first page" ())
     (body
-      (p @@ r"We write paragraphs!")
-      (a ~href:"index.html" ~download:"filename" ~target:Target_self
-        (p @@ r"We can also add [p] inside [a]")
-        (a ~accesskey:'h'
-          (p @@ r"This is just for show but we also put anchors in anchors.")
-          (p @@
-            r"Isn't that all nice? " ++
-            (abbr ~title:"Oh My God" (r"OMG")))
-          (address
-            (p @@ r"Maybe we don't want to put [p] inside [address].")
-          close)
+      (p
+        (text "We write paragraphs!")
+        (a ~href:"sup.html"
+          (text "We can put [a] inside flow.")
         close)
-        (p @@ r"Isn't it awesome?")
+      close)
+      (a ~href:"index.html" ~download:"filename" ~target:Target_self
+        (p
+          (text "We can also add [p] inside [a]")
+        close)
+        (* Still some problem here, I cannot put phrasing just yet. *)
+        (* (a ~accesskey:'h'
+          (text "This is just for show but we also put anchors in anchors.")
+          (text "Isn't that all nice? ")
+          (abbr ~title:"Oh My God"
+            (text "OMG")
+          close)
+        close) *)
+        (address
+          (text "Maybe we don't want to put [p] inside [address].")
+        close)
+        (text "Isn't it awesome?")
       close)
       (article
-        (p @@ r"Because for now this is the only thing we can do.")
-        (p @@ r"It indeed works!")
+        (text "Because for now this is the only thing we can do.")
+        (text "It indeed works!")
       close)
       (aside
-        (p @@ r"This is some aside, so wonderful.")
+        (text "This is some aside, so wonderful.")
         (blockquote ~cite:"lulz.com"
-          (p @@ r"Everything is better than HTML...")
-          (p @@ r"-- Somebody dead")
+          (text "Everything is better than HTML...")
+          (text "-- Somebody dead")
         close)
       close)
     body_end)
 
 let () =
-  print_string (export my_html) *)
+  print_string (export my_html)

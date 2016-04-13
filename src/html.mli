@@ -58,39 +58,27 @@ type target =
   | Target_self
   | Target_top
 
-(*** DEBUG ***)
-(* This is a comparison of mli type and actual type. *)
-(* They can be matched but with a great overhead... *)
-(* It would be nice to find a way to only make public a nice type! *)
-(***
-val text : string -> phrasing body * 'a -> (phrasing body * 'a -> 'b) -> 'b
-
-val text : string -> (('a,'b,'c) k, 'b,'c) element
-         : string -> ('b,'c) content -> ('a,'b,'c) k
-         : string -> 'b body * ('c body -> 'c full_tag) -> ('a,'b,'c) element -> 'a
-***)
-
 (* Text (normal character data) *)
-(* val text : string -> (('a,'b,'c) k, 'b,'c) element
+val text : string -> (('a, 'b, 'c) k, 'b, 'c) element
 
 (* All tags (flow and phrasing mixed) *)
 val a : ?href: string ->
         ?download: string ->
         ?target: target ->
-        (('a,'b,'c) element -> 'a) gentag
-val abbr : ?title: string -> (('a,'b,'c) element -> 'a) gentag
-val address : ?id:string -> (('a,'b,'c) element -> 'a) gentag
+        (('a, 'b, 'c) element -> 'a) gentag
+val abbr : ?title: string -> (('a, 'b, phrasing) element -> 'a) gentag
+val address : ?id:string -> (('a, 'b, flow) element -> 'a) gentag
 (* area TODO? *)
-val article : ?id:string -> (('a,'b,'c) element -> 'a) gentag
-val aside : ?id:string -> (('a,'b,'c) element -> 'a) gentag
+val article : ?id:string -> (('a, 'b, flow) element -> 'a) gentag
+val aside : ?id:string -> (('a, 'b, flow) element -> 'a) gentag
 (* TODO audio tag *)
-val b : ?id:string -> (('a,'b,'c) element -> 'a) gentag
-val blockquote : ?cite: string -> (('a,'b,'c) element -> 'a) gentag
-val p : ?id:string -> (('a,'b,'c) element -> 'a) gentag
-val close : ((('a,'b,'c) k,'b,'c) element,'b,'c) element
+val b : ?id:string -> (('a, 'b, phrasing) element -> 'a) gentag
+val blockquote : ?cite: string -> (('a, 'b, flow) element -> 'a) gentag
+val p : ?id:string -> (('a, 'b, flow) element -> 'a) gentag
+val close : ((('a, 'b, 'c) k, 'b, 'c) element, 'b, 'b) element
 
 val body : ?id:string -> (('a,'b,'c) element -> 'a) gentag
-val body_end : (flow body,flow,flow) element *)
+val body_end : (flow body,flow,flow) element
 
 type html
 val html : head -> flow body -> html

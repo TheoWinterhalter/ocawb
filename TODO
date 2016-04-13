@@ -6,9 +6,10 @@ HTML:
   ✘ Better syntax for rich text? (continuations again?) @cancelled(2016-04-12 23:40) @project(HTML)
   ✘ Enrich text to be able to contain <a> for instance @cancelled(2016-04-12 23:40) @project(HTML)
   ✘ Or remove <a> from usual tags @cancelled(2016-04-12 23:40) @project(HTML)
-  ☐ Add a lift operator to make a block out of something?
+  ✘ Add a lift operator to make a block out of something? @cancelled(2016-04-13 23:36) @project(HTML)
   ✘ Add generic attributes to rich text tags @cancelled(2016-04-12 23:40) @project(HTML)
   ✔ Switch to flow/phrasing tags differentiation @done(2016-04-13 00:19) @project(HTML)
   ☐ Treat text to remove '<'
   ☐ Remove indentation when not necessary (inside phrasings)
   ✘ Treat phrasing as a subtype of flow @cancelled(2016-04-13 21:10) @project(HTML)
+  ☐ Allow in the types to have phrasings

@@ -239,7 +239,7 @@ let rec export_content : type a. string -> a body -> string
 and export_tag : type a. string -> a full_tag -> string
 = fun indent (attr,tag) -> indent ^
   match tag with
-  | Text s -> s
+  | Text s -> s ^ "\n"
   | Tag_a (i,c) ->
     "<a" ^ (export_a_info i) ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
@@ -272,7 +272,7 @@ and export_tag : type a. string -> a full_tag -> string
     (export_content (indent ^ tab) c) ^
     indent ^ "</blockquote>\n"
   | Tag_p c ->
-    "<p" ^ (export_generic_attr attr) ^ ">" ^
+    "<p" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</p>\n"
 
