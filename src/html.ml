@@ -175,7 +175,7 @@ type flow
 type phrasing
 
 type _ body_tag =
-  | Text           : string                      -> phrasing body_tag
+  | Text           : string                      -> 'a body_tag
   | Tag_a          : a_info * 'a body            -> 'a body_tag
   | Tag_abbr       : abbr_info * phrasing body   -> phrasing body_tag
   | Tag_address    : flow body                   -> flow body_tag

@@ -11,4 +11,4 @@ HTML:
   ✔ Switch to flow/phrasing tags differentiation @done(2016-04-13 00:19) @project(HTML)
   ☐ Treat text to remove '<'
   ☐ Remove indentation when not necessary (inside phrasings)
-  ☐ Treat phrasing as a subtype of flow
+  ✘ Treat phrasing as a subtype of flow @cancelled(2016-04-13 21:10) @project(HTML)
