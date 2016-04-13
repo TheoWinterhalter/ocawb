@@ -12,4 +12,5 @@ HTML:
   ☐ Treat text to remove '<'
   ☐ Remove indentation when not necessary (inside phrasings)
   ✘ Treat phrasing as a subtype of flow @cancelled(2016-04-13 21:10) @project(HTML)
-  ☐ Allow in the types to have phrasings
+  ✔ Allow in the types to have phrasings @done(2016-04-14 00:16) @project(HTML)
+  ☐ Fix definition of close and body_end with new types

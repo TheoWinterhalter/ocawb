@@ -175,21 +175,21 @@ type flow
 type phrasing
 
 type _ body_tag =
-  | Text           : string                      -> 'a body_tag
-  | Tag_a          : a_info * 'a body            -> 'a body_tag
+  | Text           : string                      -> 'a       body_tag
+  | Tag_a          : a_info * 'a body            -> 'a       body_tag
   | Tag_abbr       : abbr_info * phrasing body   -> phrasing body_tag
-  | Tag_address    : flow body                   -> flow body_tag
-  | Tag_article    : flow body                   -> flow body_tag
-  | Tag_aside      : flow body                   -> flow body_tag
+  | Tag_address    : flow body                   -> flow     body_tag
+  | Tag_article    : flow body                   -> flow     body_tag
+  | Tag_aside      : flow body                   -> flow     body_tag
   | Tag_b          : phrasing body               -> phrasing body_tag
-  | Tag_blockquote : blockquote_info * flow body -> flow body_tag
-  | Tag_p          : flow body                   -> flow body_tag
+  | Tag_blockquote : blockquote_info * flow body -> flow     body_tag
+  | Tag_p          : phrasing body               -> flow     body_tag
 and 'a body = 'a full_tag list
 and 'a full_tag = general_attributes * 'a body_tag
-type ('a, 'b) content = 'a body * ('b body -> 'b full_tag)
+type ('a, 'b, 'c) content = 'a body * ('b body -> 'c full_tag)
 
-type ('a,'b,'c) element = ('b,'c) content -> 'a
-type ('a,'b,'c) k = ('a,'b,'c) element -> 'a
+type ('a,'b,'c,'d) element = ('b, 'c, 'd) content -> 'a
+type ('a,'b,'c,'d) k = ('a, 'b, 'c, 'd) element -> 'a
 type 'a gentag = ?accesskey: char ->
                  ?classes: string ->
                  ?contenteditable : bool -> 'a
