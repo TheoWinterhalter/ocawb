@@ -15,11 +15,14 @@ HTML:
   ✔ Allow in the types to have phrasings @done(2016-04-14 00:16) @project(HTML)
   ✔ Fix definition of close and body_end with new types @done(2016-04-14 10:05) @project(HTML)
   ✔ Fix the example @done(2016-04-14 10:10) @project(HTML)
-  ☐ Enpower ?id argument
+  ✔ Enpower ?id argument @done(2016-04-14 23:49) @project(HTML)
   ☐ Deal with button (maybe three different functions as type determines a lot of things)
   ☐ No longer use string for width / height
   ☐ No longer use string for classes
   ☐ Prettify the types
+  ☐ Type for IDs?
+  ☐ Ensure the constraints of HTML? (even if only at runtime?)
+  ☐ Use list for class(es) ?
 
 Missing HTML tags:
   ☐ area
@@ -110,3 +113,18 @@ Missing HTML tags:
   ☐ var
   ☐ video
   ☐ wbr
+
+Global Attributes:
+  ☐ contextmenu
+  ☐ dir
+  ☐ draggable
+  ☐ dropzone
+  ☐ hidden
+  ✔ id @done(2016-04-14 23:48) @project(Global Attributes)
+  ☐ lang
+  ☐ spellcheck
+  ☐ style ?
+  ☐ tabindex
+  ☐ title (=> remove from abbr)
+  ☐ translates
+  ☐ Complete the list with event attributes ?

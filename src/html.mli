@@ -50,7 +50,7 @@ type ('a,'b,'c,'d) element
 type ('a,'b,'c,'d) k = ('a, 'b, 'c, 'd) element -> 'a
 type 'a gentag = ?accesskey: char ->
                  ?classes: string ->
-                 ?contenteditable : bool -> 'a
+                 ?contenteditable: bool -> 'a
 
 type target =
   | Target_blank
@@ -62,11 +62,12 @@ type target =
 val text : string -> (('a, 'b, 'c, 'd) k, 'b, 'c, 'd) element
 
 (* All tags (flow and phrasing mixed) *)
-val a : ?href: string ->
+val a : ?id: string ->
+        ?href: string ->
         ?download: string ->
         ?target: target ->
         (('a, 'b, 'c, 'c) element -> 'a) gentag
-val abbr : ?title: string ->
+val abbr : ?id:string -> ?title: string ->
            (('a, 'b, phrasing, phrasing) element -> 'a) gentag
 val address : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
 (* area TODO? *)
@@ -74,13 +75,16 @@ val article : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
 val aside : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
 (* TODO audio *)
 val b : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
-val blockquote : ?cite: string -> (('a, 'b, flow, flow) element -> 'a) gentag
+val blockquote : ?id: string ->
+                 ?cite: string ->
+                 (('a, 'b, flow, flow) element -> 'a) gentag
 val br : ?id:string ->
          (unit ->
           (('a, phrasing, 'c, phrasing) k, phrasing, 'c, phrasing) element)
           gentag
 (* TODO button *)
-val canvas : ?height: string ->
+val canvas : ?id: string ->
+             ?height: string ->
              ?width: string ->
              (('a, 'b, 'c, 'c) element -> 'a) gentag
 val cite : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag

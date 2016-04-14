@@ -164,13 +164,15 @@ let export_canvas_info i =
 type general_attributes = {
   accesskey : char option ;
   classes : string option ; (* TODO Use a list instead? *)
-  contenteditable : bool option
+  contenteditable : bool option ;
+  id : string option
 }
 
 let empty_attributes = {
   accesskey       = None ;
   classes         = None ;
-  contenteditable = None
+  contenteditable = None ;
+  id              = None
 }
 
 let export_generic_attr attr =
@@ -182,7 +184,10 @@ let export_generic_attr attr =
    | Some a -> Printf.sprintf " class=\"%s\"" a) ^
   (match attr.contenteditable with
    | None -> ""
-   | Some a -> Printf.sprintf " contenteditable=\"%b\"" a)
+   | Some a -> Printf.sprintf " contenteditable=\"%b\"" a) ^
+  (match attr.id with
+   | None -> ""
+   | Some a -> Printf.sprintf " id=\"%s\"" a)
 
 type flow
 type phrasing
@@ -219,84 +224,84 @@ type ('a,'b,'c,'d) element = ('b, 'c, 'd) content -> 'a
 type ('a,'b,'c,'d) k = ('a, 'b, 'c, 'd) element -> 'a
 type 'a gentag = ?accesskey: char ->
                  ?classes: string ->
-                 ?contenteditable : bool -> 'a
+                 ?contenteditable: bool -> 'a
 
 let text s (c,h) k =
   k ((empty_attributes, Text s) :: c, h)
 
-let mktag tag ?accesskey ?classes ?contenteditable elt =
-  elt ([], (fun c -> { accesskey ; classes ; contenteditable } , tag c))
+let mktag id tag ?accesskey ?classes ?contenteditable elt =
+  elt ([], (fun c -> { accesskey ; classes ; contenteditable ; id } , tag c))
 
-let voidtag tag ?accesskey ?classes ?contenteditable () (c,h) k =
-  k (({ accesskey ; classes ; contenteditable } , tag) :: c, h)
+let voidtag id tag ?accesskey ?classes ?contenteditable () (c,h) k =
+  k (({ accesskey ; classes ; contenteditable ; id } , tag) :: c, h)
 
-let a ?href ?download ?target =
-  mktag (fun c -> Tag_a ({ href ; download ; target }, c))
+let a ?id ?href ?download ?target =
+  mktag id (fun c -> Tag_a ({ href ; download ; target }, c))
 
-let abbr ?title =
-  mktag (fun c -> Tag_abbr ({ title }, c))
+let abbr ?id ?title =
+  mktag id (fun c -> Tag_abbr ({ title }, c))
 
 let address ?id =
-  mktag (fun c -> Tag_address c)
+  mktag id (fun c -> Tag_address c)
 
 let article ?id =
-  mktag (fun c -> Tag_article c)
+  mktag id (fun c -> Tag_article c)
 
 let aside ?id =
-  mktag (fun c -> Tag_aside c)
+  mktag id (fun c -> Tag_aside c)
 
 let b ?id =
-  mktag (fun c -> Tag_b c)
+  mktag id (fun c -> Tag_b c)
 
-let blockquote ?cite =
-  mktag (fun c -> Tag_blockquote ({ cite }, c))
+let blockquote ?id ?cite =
+  mktag id (fun c -> Tag_blockquote ({ cite }, c))
 
 let br ?id =
-  voidtag Tag_br
+  voidtag id Tag_br
 
-let canvas ?height ?width =
-  mktag (fun c -> Tag_canvas ({ height ; width }, c))
+let canvas ?id ?height ?width =
+  mktag id (fun c -> Tag_canvas ({ height ; width }, c))
 
 let cite ?id =
-  mktag (fun c -> Tag_cite c)
+  mktag id (fun c -> Tag_cite c)
 
 let code ?id =
-  mktag (fun c -> Tag_code c)
+  mktag id (fun c -> Tag_code c)
 
 let div ?id =
-  mktag (fun c -> Tag_div c)
+  mktag id (fun c -> Tag_div c)
 
 let em ?id =
-  mktag (fun c -> Tag_em c)
+  mktag id (fun c -> Tag_em c)
 
 let footer ?id =
-  mktag (fun c -> Tag_footer c)
+  mktag id (fun c -> Tag_footer c)
 
 let h1 ?id =
-  mktag (fun c -> Tag_h1 c)
+  mktag id (fun c -> Tag_h1 c)
 
 let h2 ?id =
-  mktag (fun c -> Tag_h2 c)
+  mktag id (fun c -> Tag_h2 c)
 
 let h3 ?id =
-  mktag (fun c -> Tag_h3 c)
+  mktag id (fun c -> Tag_h3 c)
 
 let h4 ?id =
-  mktag (fun c -> Tag_h4 c)
+  mktag id (fun c -> Tag_h4 c)
 
 let h5 ?id =
-  mktag (fun c -> Tag_h5 c)
+  mktag id (fun c -> Tag_h5 c)
 
 let h6 ?id =
-  mktag (fun c -> Tag_h6 c)
+  mktag id (fun c -> Tag_h6 c)
 
 let p ?id =
-  mktag (fun c -> Tag_p c)
+  mktag id (fun c -> Tag_p c)
 
 let close (c1,h1) (c2,h2) k =
   k ((h1 c1) :: c2, h2)
 
-let body ?id = mktag (fun c -> assert false)
+let body ?id = mktag id (fun c -> assert false)
 
 let body_end (c,_) = c
 
