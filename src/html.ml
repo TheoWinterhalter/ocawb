@@ -202,7 +202,7 @@ let text s (c,h) k =
 let mktag tag ?accesskey ?classes ?contenteditable elt =
   elt ([], (fun c -> { accesskey ; classes ; contenteditable } , tag c))
 
-let voidtag tag ?accesskey ?classes ?contenteditable (c,h) k =
+let voidtag tag ?accesskey ?classes ?contenteditable () (c,h) k =
   k (({ accesskey ; classes ; contenteditable } , tag) :: c, h)
 
 let a ?href ?download ?target =
