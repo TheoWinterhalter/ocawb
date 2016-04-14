@@ -15,3 +15,4 @@ HTML:
   ✔ Allow in the types to have phrasings @done(2016-04-14 00:16) @project(HTML)
   ✔ Fix definition of close and body_end with new types @done(2016-04-14 10:05) @project(HTML)
   ✔ Fix the example @done(2016-04-14 10:10) @project(HTML)
+  ☐ Enpower ?id argument

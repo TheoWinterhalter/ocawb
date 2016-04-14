@@ -75,6 +75,8 @@ val aside : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
 (* TODO audio tag *)
 val b : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
 val blockquote : ?cite: string -> (('a, 'b, flow, flow) element -> 'a) gentag
+val br : ?id:string ->
+         (('a, phrasing, 'c, phrasing) k, phrasing, 'c, phrasing) element gentag
 val p : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
 val close : ((('a, 'b, 'c, 'd) k, 'b, 'c, 'd) element, 'h, 'h, 'b) element
 

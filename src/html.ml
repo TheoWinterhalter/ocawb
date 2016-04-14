@@ -183,7 +183,9 @@ type _ body_tag =
   | Tag_aside      : flow body                   -> flow     body_tag
   | Tag_b          : phrasing body               -> phrasing body_tag
   | Tag_blockquote : blockquote_info * flow body -> flow     body_tag
+  | Tag_br         :                                phrasing body_tag
   | Tag_p          : phrasing body               -> flow     body_tag
+
 and 'a body = 'a full_tag list
 and 'a full_tag = general_attributes * 'a body_tag
 type ('a, 'b, 'c) content = 'a body * ('b body -> 'c full_tag)
@@ -199,6 +201,9 @@ let text s (c,h) k =
 
 let mktag tag ?accesskey ?classes ?contenteditable elt =
   elt ([], (fun c -> { accesskey ; classes ; contenteditable } , tag c))
+
+let voidtag tag ?accesskey ?classes ?contenteditable (c,h) k =
+  k (({ accesskey ; classes ; contenteditable } , tag) :: c, h)
 
 let a ?href ?download ?target =
   mktag (fun c -> Tag_a ({ href ; download ; target }, c))
@@ -220,6 +225,9 @@ let b ?id =
 
 let blockquote ?cite =
   mktag (fun c -> Tag_blockquote ({ cite }, c))
+
+let br ?id =
+  voidtag Tag_br
 
 let p ?id =
   mktag (fun c -> Tag_p c)
@@ -271,6 +279,7 @@ and export_tag : type a. string -> a full_tag -> string
     ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</blockquote>\n"
+  | Tag_br -> "<br" ^ (export_generic_attr attr) ^ " />\n"
   | Tag_p c ->
     "<p" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
