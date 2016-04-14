@@ -33,15 +33,15 @@ Missing HTML tags:
   ☐ details
   ☐ dfn
   ☐ dialog
-  ☐ div
+  ✔ div @done(2016-04-14 23:18) @project(Missing HTML tags)
   ☐ dl
   ☐ dt
-  ☐ em
+  ✔ em @done(2016-04-14 23:21) @project(Missing HTML tags)
   ☐ embed
   ☐ fieldset
   ☐ figcaption
   ☐ figure
-  ☐ footer
+  ✔ footer @done(2016-04-14 23:25) @project(Missing HTML tags)
   ☐ form
   ☐ h1
   ☐ h2

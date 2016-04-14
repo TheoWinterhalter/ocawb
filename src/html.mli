@@ -93,7 +93,9 @@ val code : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
 (* TODO details *)
 (* TODO dfn *)
 (* TODO dialog *)
-(* TODO div *)
+val div : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
+val em : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
+val footer : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
 val p : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
 val close : ((('a, 'b, 'c, 'd) k, 'b, 'c, 'd) element, 'h, 'h, 'b) element
 

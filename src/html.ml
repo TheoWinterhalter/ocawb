@@ -200,6 +200,9 @@ type _ body_tag =
   | Tag_canvas     : canvas_info * 'a body       -> 'a       body_tag
   | Tag_cite       : phrasing body               -> phrasing body_tag
   | Tag_code       : phrasing body               -> phrasing body_tag
+  | Tag_div        : flow body                   -> flow     body_tag
+  | Tag_em         : phrasing body               -> phrasing body_tag
+  | Tag_footer     : flow body                   -> flow     body_tag
   | Tag_p          : phrasing body               -> flow     body_tag
 
 and 'a body = 'a full_tag list
@@ -253,6 +256,15 @@ let cite ?id =
 
 let code ?id =
   mktag (fun c -> Tag_code c)
+
+let div ?id =
+  mktag (fun c -> Tag_div c)
+
+let em ?id =
+  mktag (fun c -> Tag_em c)
+
+let footer ?id =
+  mktag (fun c -> Tag_footer c)
 
 let p ?id =
   mktag (fun c -> Tag_p c)
@@ -317,10 +329,22 @@ and export_tag : type a. string -> a full_tag -> string
     "<code>\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</code>\n"
+  | Tag_em c ->
+    "<em>\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</em>\n"
+  | Tag_footer c ->
+    "<footer>\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</footer>\n"
   | Tag_p c ->
     "<p" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</p>\n"
+  | Tag_div c ->
+    "<div" ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</div>\n"
 
 let export_body body =
   tab ^ "<body>\n" ^
