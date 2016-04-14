@@ -2,9 +2,16 @@ HTML:
   ☐ More attributes
   ☐ More tags
   ☐ Generic way of handling attributes?
-  ☐ <address> should ask for rich text as well
-  ☐ Better syntax for rich text? (continuations again?)
-  ☐ Enrich text to be able to contain <a> for instance
-  ☐ Or remove <a> from usual tags
-  ☐ Add a lift operator to make a block out of something?
-  ☐ Add generic attributes to rich text tags
+  ✘ <address> should ask for rich text as well @cancelled(2016-04-12 23:39) @project(HTML)
+  ✘ Better syntax for rich text? (continuations again?) @cancelled(2016-04-12 23:40) @project(HTML)
+  ✘ Enrich text to be able to contain <a> for instance @cancelled(2016-04-12 23:40) @project(HTML)
+  ✘ Or remove <a> from usual tags @cancelled(2016-04-12 23:40) @project(HTML)
+  ✘ Add a lift operator to make a block out of something? @cancelled(2016-04-13 23:36) @project(HTML)
+  ✘ Add generic attributes to rich text tags @cancelled(2016-04-12 23:40) @project(HTML)
+  ✔ Switch to flow/phrasing tags differentiation @done(2016-04-13 00:19) @project(HTML)
+  ☐ Treat text to remove '<'
+  ☐ Remove indentation when not necessary (inside phrasings)
+  ✘ Treat phrasing as a subtype of flow @cancelled(2016-04-13 21:10) @project(HTML)
+  ✔ Allow in the types to have phrasings @done(2016-04-14 00:16) @project(HTML)
+  ✔ Fix definition of close and body_end with new types @done(2016-04-14 10:05) @project(HTML)
+  ✔ Fix the example @done(2016-04-14 10:10) @project(HTML)

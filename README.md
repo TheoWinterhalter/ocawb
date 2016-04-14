@@ -19,29 +19,37 @@ let my_html =
       ]
       ~title:"My first page" ())
     (body
-      (p @@ r"We write paragraphs!")
+      (p
+        (text "We write paragraphs!")
+        (a ~href:"sup.html"
+          (text "We can put [a] inside flow.")
+        close)
+      close)
       (a ~href:"index.html" ~download:"filename" ~target:Target_self
-        (p @@ r"We can also add [p] inside [a]")
-        (a ~accesskey:'h'
-          (p @@ r"This is just for show but we also put anchors in anchors.")
-          (p @@
-            r"Isn't that all nice?" ++
-            (abbr ~title:"Oh My God" (r"OMG")))
-          (address
-            (p @@ r"Maybe we don't want to put [p] inside [address].")
+        (p
+          (text "We can also add [p] inside [a]")
+          (a ~accesskey:'h'
+            (text "This is just for show but we also put anchors in anchors.")
+            (text "Isn't that all nice? ")
+            (abbr ~title:"Oh My God"
+              (text "OMG")
+            close)
           close)
         close)
-        (p @@ r"Isn't it awesome?")
+        (address
+          (text "Maybe we don't want to put [p] inside [address].")
+        close)
+        (text "Isn't it awesome?")
       close)
       (article
-        (p @@ r"Because for now this is the only thing we can do.")
-        (p @@ r"It indeed works!")
+        (text "Because for now this is the only thing we can do.")
+        (text "It indeed works!")
       close)
       (aside
-        (p @@ r"This is some aside, so wonderful.")
+        (text "This is some aside, so wonderful.")
         (blockquote ~cite:"lulz.com"
-          (p @@ r"Everything is better than HTML...")
-          (p @@ r"-- Somebody dead")
+          (text "Everything is better than HTML...")
+          (text "-- Somebody dead")
         close)
       close)
     body_end)
@@ -60,27 +68,37 @@ To produce the following html:
     <link href="icon.png" rel="icon">
   </head>
   <body>
-    <p>We write paragraphs!</p>
-    <a href="index.html" download="filename" target="_self">
-      <p>We can also add [p] inside [a]</p>
-      <a accesskey="h">
-        <p>This is just for show but we also put anchors in anchors.</p>
-        <p>Isn't that all nice?<abbr title="Oh My God">OMG</abbr></p>
-        <address>
-          <p>Maybe we don't want to put [p] inside [address].</p>
-        </address>
+    <p>
+      We write paragraphs!
+      <a href="sup.html">
+        We can put [a] inside flow.
       </a>
-      <p>Isn't it awesome?</p>
+    </p>
+    <a href="index.html" download="filename" target="_self">
+      <p>
+        We can also add [p] inside [a]
+        <a accesskey="h">
+          This is just for show but we also put anchors in anchors.
+          Isn't that all nice?
+          <abbr title="Oh My God">
+            OMG
+          </abbr>
+        </a>
+      </p>
+      <address>
+        Maybe we don't want to put [p] inside [address].
+      </address>
+      Isn't it awesome?
     </a>
     <article>
-      <p>Because for now this is the only thing we can do.</p>
-      <p>It indeed works!</p>
+      Because for now this is the only thing we can do.
+      It indeed works!
     </article>
     <aside>
-      <p>This is some aside, so wonderful.</p>
+      This is some aside, so wonderful.
       <blockquote cite="lulz.com">
-        <p>Everything is better than HTML...</p>
-        <p>-- Somebody dead</p>
+        Everything is better than HTML...
+        -- Somebody dead
       </blockquote>
     </aside>
   </body>
