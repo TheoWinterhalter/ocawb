@@ -1,6 +1,6 @@
 open Html
 
-(* let my_html =
+let my_html =
   html
     (head
       ~links:[
@@ -18,15 +18,14 @@ open Html
       (a ~href:"index.html" ~download:"filename" ~target:Target_self
         (p
           (text "We can also add [p] inside [a]")
-        close)
-        (* Still some problem here, I cannot put phrasing just yet. *)
-        (* (a ~accesskey:'h'
-          (text "This is just for show but we also put anchors in anchors.")
-          (text "Isn't that all nice? ")
-          (abbr ~title:"Oh My God"
-            (text "OMG")
+          (a ~accesskey:'h'
+            (text "This is just for show but we also put anchors in anchors.")
+            (text "Isn't that all nice? ")
+            (abbr ~title:"Oh My God"
+              (text "OMG")
+            close)
           close)
-        close) *)
+        close)
         (address
           (text "Maybe we don't want to put [p] inside [address].")
         close)
@@ -46,4 +45,4 @@ open Html
     body_end)
 
 let () =
-  print_string (export my_html) *)
+  print_string (export my_html)

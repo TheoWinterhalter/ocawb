@@ -4,8 +4,6 @@ The purpose of this repository is to build an ocaml tool to write html.
 The first phase of this work is to reflect (a subset of) HTML in ocaml.  
 Later on, I will try to provide more functionalities.
 
-*This needs some refactoring so no example for now, sorry...*
-
 Thanks to the power of continuations, on currently can write the following
 ocaml code:
 
@@ -30,15 +28,14 @@ let my_html =
       (a ~href:"index.html" ~download:"filename" ~target:Target_self
         (p
           (text "We can also add [p] inside [a]")
-        close)
-        (* Still some problem here, I cannot put phrasing just yet. *)
-        (* (a ~accesskey:'h'
-          (text "This is just for show but we also put anchors in anchors.")
-          (text "Isn't that all nice? ")
-          (abbr ~title:"Oh My God"
-            (text "OMG")
+          (a ~accesskey:'h'
+            (text "This is just for show but we also put anchors in anchors.")
+            (text "Isn't that all nice? ")
+            (abbr ~title:"Oh My God"
+              (text "OMG")
+            close)
           close)
-        close) *)
+        close)
         (address
           (text "Maybe we don't want to put [p] inside [address].")
         close)
@@ -59,7 +56,6 @@ let my_html =
 
 let () =
   print_string (export my_html)
-
 ```
 
 To produce the following html:
@@ -81,6 +77,13 @@ To produce the following html:
     <a href="index.html" download="filename" target="_self">
       <p>
         We can also add [p] inside [a]
+        <a accesskey="h">
+          This is just for show but we also put anchors in anchors.
+          Isn't that all nice?
+          <abbr title="Oh My God">
+            OMG
+          </abbr>
+        </a>
       </p>
       <address>
         Maybe we don't want to put [p] inside [address].
