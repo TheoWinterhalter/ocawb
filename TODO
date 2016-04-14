@@ -43,13 +43,14 @@ Missing HTML tags:
   ☐ figure
   ✔ footer @done(2016-04-14 23:25) @project(Missing HTML tags)
   ☐ form
-  ☐ h1
-  ☐ h2
-  ☐ h3
-  ☐ h4
-  ☐ h5
-  ☐ h6
+  ✔ h1 @done(2016-04-14 23:34) @project(Missing HTML tags)
+  ✔ h2 @done(2016-04-14 23:34) @project(Missing HTML tags)
+  ✔ h3 @done(2016-04-14 23:34) @project(Missing HTML tags)
+  ✔ h4 @done(2016-04-14 23:34) @project(Missing HTML tags)
+  ✔ h5 @done(2016-04-14 23:34) @project(Missing HTML tags)
+  ✔ h6 @done(2016-04-14 23:34) @project(Missing HTML tags)
   ☐ header
+  ☐ hgroup
   ☐ hr
   ☐ i
   ☐ iframe

@@ -96,6 +96,12 @@ val code : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
 val div : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
 val em : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
 val footer : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
+val h1 : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
+val h2 : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
+val h3 : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
+val h4 : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
+val h5 : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
+val h5 : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
 val p : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
 val close : ((('a, 'b, 'c, 'd) k, 'b, 'c, 'd) element, 'h, 'h, 'b) element
 

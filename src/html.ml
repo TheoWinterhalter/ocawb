@@ -203,6 +203,12 @@ type _ body_tag =
   | Tag_div        : flow body                   -> flow     body_tag
   | Tag_em         : phrasing body               -> phrasing body_tag
   | Tag_footer     : flow body                   -> flow     body_tag
+  | Tag_h1         : phrasing body               -> flow     body_tag
+  | Tag_h2         : phrasing body               -> flow     body_tag
+  | Tag_h3         : phrasing body               -> flow     body_tag
+  | Tag_h4         : phrasing body               -> flow     body_tag
+  | Tag_h5         : phrasing body               -> flow     body_tag
+  | Tag_h6         : phrasing body               -> flow     body_tag
   | Tag_p          : phrasing body               -> flow     body_tag
 
 and 'a body = 'a full_tag list
@@ -266,6 +272,24 @@ let em ?id =
 let footer ?id =
   mktag (fun c -> Tag_footer c)
 
+let h1 ?id =
+  mktag (fun c -> Tag_h1 c)
+
+let h2 ?id =
+  mktag (fun c -> Tag_h2 c)
+
+let h3 ?id =
+  mktag (fun c -> Tag_h3 c)
+
+let h4 ?id =
+  mktag (fun c -> Tag_h4 c)
+
+let h5 ?id =
+  mktag (fun c -> Tag_h5 c)
+
+let h6 ?id =
+  mktag (fun c -> Tag_h6 c)
+
 let p ?id =
   mktag (fun c -> Tag_p c)
 
@@ -290,7 +314,7 @@ and export_tag : type a. string -> a full_tag -> string
     (export_content (indent ^ tab) c) ^
     indent ^ "</a>\n"
   | Tag_abbr (i,c) ->
-    "<abbr" ^ (export_abbr_info i) ^ ">\n" ^
+    "<abbr" ^ (export_abbr_info i) ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</abbr>\n"
   | Tag_address c ->
@@ -306,7 +330,7 @@ and export_tag : type a. string -> a full_tag -> string
     (export_content (indent ^ tab) c) ^
     indent ^ "</aside>\n"
   | Tag_b c ->
-    "<b>\n" ^
+    "<b" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</b>\n"
   | Tag_blockquote (i,c) ->
@@ -322,29 +346,53 @@ and export_tag : type a. string -> a full_tag -> string
     (export_content (indent ^ tab) c) ^
     indent ^ "</canvas>\n"
   | Tag_cite c ->
-    "<cite>\n" ^
+    "<cite" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</cite>\n"
   | Tag_code c ->
-    "<code>\n" ^
+    "<code" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</code>\n"
-  | Tag_em c ->
-    "<em>\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</em>\n"
-  | Tag_footer c ->
-    "<footer>\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</footer>\n"
-  | Tag_p c ->
-    "<p" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</p>\n"
   | Tag_div c ->
     "<div" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</div>\n"
+  | Tag_em c ->
+    "<em" ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</em>\n"
+  | Tag_footer c ->
+    "<footer" ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</footer>\n"
+  | Tag_h1 c ->
+    "<h1" ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</h1>"
+  | Tag_h2 c ->
+    "<h2" ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</h2>"
+  | Tag_h3 c ->
+    "<h3" ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</h3>"
+  | Tag_h4 c ->
+    "<h4" ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</h4>"
+  | Tag_h5 c ->
+    "<h5" ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</h5>"
+  | Tag_h6 c ->
+    "<h6" ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</h6>"
+  | Tag_p c ->
+    "<p" ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</p>\n"
 
 let export_body body =
   tab ^ "<body>\n" ^
