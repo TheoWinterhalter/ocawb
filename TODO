@@ -1,6 +1,6 @@
 HTML:
   ☐ More attributes
-  ☐ More tags
+  ✔ More tags @done(2016-04-14 11:57) @project(HTML)
   ☐ Generic way of handling attributes?
   ✘ <address> should ask for rich text as well @cancelled(2016-04-12 23:39) @project(HTML)
   ✘ Better syntax for rich text? (continuations again?) @cancelled(2016-04-12 23:40) @project(HTML)
@@ -16,3 +16,96 @@ HTML:
   ✔ Fix definition of close and body_end with new types @done(2016-04-14 10:05) @project(HTML)
   ✔ Fix the example @done(2016-04-14 10:10) @project(HTML)
   ☐ Enpower ?id argument
+  ☐ Deal with button (maybe three different functions as type determines a lot of things)
+  ☐ No longer use string for width / height
+  ☐ No longer use string for classes
+  ☐ Prettify the types
+
+Missing HTML tags:
+  ☐ area
+  ☐ audio
+  ☐ button
+  ☐ col
+  ☐ colgroup
+  ☐ datalist
+  ☐ dd
+  ☐ del
+  ☐ details
+  ☐ dfn
+  ☐ dialog
+  ☐ div
+  ☐ dl
+  ☐ dt
+  ☐ em
+  ☐ embed
+  ☐ fieldset
+  ☐ figcaption
+  ☐ figure
+  ☐ footer
+  ☐ form
+  ☐ h1
+  ☐ h2
+  ☐ h3
+  ☐ h4
+  ☐ h5
+  ☐ h6
+  ☐ header
+  ☐ hr
+  ☐ i
+  ☐ iframe
+  ☐ img
+  ☐ input
+  ☐ ins
+  ☐ kbd
+  ☐ keygen
+  ☐ label
+  ☐ legend
+  ☐ li
+  ☐ link
+  ☐ main
+  ☐ map
+  ☐ mark
+  ☐ menu
+  ☐ menuitem
+  ☐ meter
+  ☐ nav
+  ☐ noscript
+  ☐ object
+  ☐ ol
+  ☐ optgroup
+  ☐ option
+  ☐ output
+  ☐ param
+  ☐ pre
+  ☐ progress
+  ☐ q
+  ☐ rp
+  ☐ rt
+  ☐ ruby
+  ☐ s
+  ☐ samp
+  ☐ script ?
+  ☐ section
+  ☐ select
+  ☐ small
+  ☐ source
+  ☐ span
+  ☐ strong
+  ☐ sub
+  ☐ summary
+  ☐ sup
+  ☐ table
+  ☐ tbody
+  ☐ td
+  ☐ textarea
+  ☐ tfoot
+  ☐ th
+  ☐ thead
+  ☐ time
+  ☐ tr
+  ☐ track
+  ☐ u
+  ☐ ul
+  ☐ var
+  ☐ video
+  ☐ wbr

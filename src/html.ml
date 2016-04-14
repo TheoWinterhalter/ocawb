@@ -145,6 +145,19 @@ let export_blockquote_info i =
    | None -> ""
    | Some u -> " cite=\"" ^ u ^ "\"")
 
+type canvas_info = {
+  height : string option ;
+  width  : string option
+}
+
+let export_canvas_info i =
+  (match i.height with
+   | None -> ""
+   | Some u -> " height=\"" ^ u ^ "\"") ^
+  (match i.width with
+   | None -> ""
+   | Some u -> " width=\"" ^ u ^ "\"")
+
 (* We could enrich it with a supertype to add general attributes. *)
 (* This also might be insufficient as we may want users to define their own
  * tags. *)
@@ -184,6 +197,9 @@ type _ body_tag =
   | Tag_b          : phrasing body               -> phrasing body_tag
   | Tag_blockquote : blockquote_info * flow body -> flow     body_tag
   | Tag_br         :                                phrasing body_tag
+  | Tag_canvas     : canvas_info * 'a body       -> 'a       body_tag
+  | Tag_cite       : phrasing body               -> phrasing body_tag
+  | Tag_code       : phrasing body               -> phrasing body_tag
   | Tag_p          : phrasing body               -> flow     body_tag
 
 and 'a body = 'a full_tag list
@@ -228,6 +244,15 @@ let blockquote ?cite =
 
 let br ?id =
   voidtag Tag_br
+
+let canvas ?height ?width =
+  mktag (fun c -> Tag_canvas ({ height ; width }, c))
+
+let cite ?id =
+  mktag (fun c -> Tag_cite c)
+
+let code ?id =
+  mktag (fun c -> Tag_code c)
 
 let p ?id =
   mktag (fun c -> Tag_p c)
@@ -280,6 +305,18 @@ and export_tag : type a. string -> a full_tag -> string
     (export_content (indent ^ tab) c) ^
     indent ^ "</blockquote>\n"
   | Tag_br -> "<br" ^ (export_generic_attr attr) ^ " />\n"
+  | Tag_canvas (i,c) ->
+    "<canvas" ^ (export_canvas_info i) ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</canvas>\n"
+  | Tag_cite c ->
+    "<cite>\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</cite>\n"
+  | Tag_code c ->
+    "<code>\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</code>\n"
   | Tag_p c ->
     "<p" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^

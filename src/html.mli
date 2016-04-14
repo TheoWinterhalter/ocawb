@@ -72,13 +72,28 @@ val address : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
 (* area TODO? *)
 val article : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
 val aside : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
-(* TODO audio tag *)
+(* TODO audio *)
 val b : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
 val blockquote : ?cite: string -> (('a, 'b, flow, flow) element -> 'a) gentag
 val br : ?id:string ->
          (unit ->
           (('a, phrasing, 'c, phrasing) k, phrasing, 'c, phrasing) element)
           gentag
+(* TODO button *)
+val canvas : ?height: string ->
+             ?width: string ->
+             (('a, 'b, 'c, 'c) element -> 'a) gentag
+val cite : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
+val code : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
+(* TODO col *)
+(* TODO colgroup *)
+(* TODO datalist *)
+(* TODO dd *)
+(* TODO del *)
+(* TODO details *)
+(* TODO dfn *)
+(* TODO dialog *)
+(* TODO div *)
 val p : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
 val close : ((('a, 'b, 'c, 'd) k, 'b, 'c, 'd) element, 'h, 'h, 'b) element
 
