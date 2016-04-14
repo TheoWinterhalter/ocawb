@@ -76,10 +76,10 @@ val aside : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
 val b : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
 val blockquote : ?cite: string -> (('a, 'b, flow, flow) element -> 'a) gentag
 val p : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
-(* val close : ((('a, 'b, 'c, 'd) k, 'b, 'c, 'd) element, 'b, 'b, 'd) element *)
+val close : ((('a, 'b, 'c, 'd) k, 'b, 'c, 'd) element, 'h, 'h, 'b) element
 
 val body : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
-(* val body_end : (flow body, 'b, flow, flow) element *)
+val body_end : (flow body, flow, 'c, 'd) element
 
 type html
 val html : head -> flow body -> html
