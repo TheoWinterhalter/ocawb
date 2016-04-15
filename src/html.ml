@@ -226,6 +226,11 @@ type 'a gentag = ?accesskey: char ->
                  ?classes: string ->
                  ?contenteditable: bool -> 'a
 
+type ('a,'b,'c,'d) tag =
+  (('a, 'b, 'c, 'd) element -> 'a) gentag
+type ('a,'b,'c) void_tag =
+  (unit -> (('a, 'b, 'c, 'b) k, 'b, 'c, 'b) element) gentag
+
 let text s (c,h) k =
   k ((empty_attributes, Text s) :: c, h)
 

@@ -52,6 +52,17 @@ type 'a gentag = ?accesskey: char ->
                  ?classes: string ->
                  ?contenteditable: bool -> 'a
 
+(*** Some types to see clearer *)
+
+(** The only important types are 'c, content model of the tag, *)
+(** and 'd, content model of its parent  *)
+type ('a,'b,'c,'d) tag =
+  (('a, 'b, 'c, 'd) element -> 'a) gentag
+
+(** 'b is the content model of the parent *)
+type ('a,'b,'c) void_tag =
+  (unit -> (('a, 'b, 'c, 'b) k, 'b, 'c, 'b) element) gentag
+
 type target =
   | Target_blank
   | Target_parent
@@ -66,29 +77,25 @@ val a : ?id: string ->
         ?href: string ->
         ?download: string ->
         ?target: target ->
-        (('a, 'b, 'c, 'c) element -> 'a) gentag
-val abbr : ?id:string -> ?title: string ->
-           (('a, 'b, phrasing, phrasing) element -> 'a) gentag
-val address : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
+        ('a, 'b, 'c, 'c) tag
+val abbr : ?id:string -> ?title: string -> ('a, 'b, phrasing, phrasing) tag
+val address : ?id:string -> ('a, 'b, flow, flow) tag
 (* area TODO? *)
-val article : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
-val aside : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
+val article : ?id:string -> ('a, 'b, flow, flow) tag
+val aside : ?id:string -> ('a, 'b, flow, flow) tag
 (* TODO audio *)
-val b : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
+val b : ?id:string -> ('a, 'b, phrasing, phrasing) tag
 val blockquote : ?id: string ->
                  ?cite: string ->
-                 (('a, 'b, flow, flow) element -> 'a) gentag
-val br : ?id:string ->
-         (unit ->
-          (('a, phrasing, 'c, phrasing) k, phrasing, 'c, phrasing) element)
-          gentag
+                 ('a, 'b, flow, flow) tag
+val br : ?id:string -> ('a, phrasing, 'c) void_tag
 (* TODO button *)
 val canvas : ?id: string ->
              ?height: string ->
              ?width: string ->
-             (('a, 'b, 'c, 'c) element -> 'a) gentag
-val cite : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
-val code : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
+             ('a, 'b, 'c, 'c) tag
+val cite : ?id:string -> ('a, 'b, phrasing, phrasing) tag
+val code : ?id:string -> ('a, 'b, phrasing, phrasing) tag
 (* TODO col *)
 (* TODO colgroup *)
 (* TODO datalist *)
@@ -97,19 +104,19 @@ val code : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
 (* TODO details *)
 (* TODO dfn *)
 (* TODO dialog *)
-val div : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
-val em : ?id:string -> (('a, 'b, phrasing, phrasing) element -> 'a) gentag
-val footer : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
-val h1 : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
-val h2 : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
-val h3 : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
-val h4 : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
-val h5 : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
-val h5 : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
-val p : ?id:string -> (('a, 'b, phrasing, flow) element -> 'a) gentag
+val div : ?id:string -> ('a, 'b, flow, flow) tag
+val em : ?id:string -> ('a, 'b, phrasing, phrasing) tag
+val footer : ?id:string -> ('a, 'b, flow, flow) tag
+val h1 : ?id:string -> ('a, 'b, phrasing, flow) tag
+val h2 : ?id:string -> ('a, 'b, phrasing, flow) tag
+val h3 : ?id:string -> ('a, 'b, phrasing, flow) tag
+val h4 : ?id:string -> ('a, 'b, phrasing, flow) tag
+val h5 : ?id:string -> ('a, 'b, phrasing, flow) tag
+val h5 : ?id:string -> ('a, 'b, phrasing, flow) tag
+val p : ?id:string -> ('a, 'b, phrasing, flow) tag
 val close : ((('a, 'b, 'c, 'd) k, 'b, 'c, 'd) element, 'h, 'h, 'b) element
 
-val body : ?id:string -> (('a, 'b, flow, flow) element -> 'a) gentag
+val body : ?id:string -> ('a, 'b, flow, flow) tag
 val body_end : (flow body, flow, 'c, 'd) element
 
 type html

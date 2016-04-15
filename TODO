@@ -19,8 +19,9 @@ HTML:
   ☐ Deal with button (maybe three different functions as type determines a lot of things)
   ☐ No longer use string for width / height
   ☐ No longer use string for classes
-  ☐ Prettify the types
+  ✔ Prettify the types @done(2016-04-15 20:23) @project(HTML)
   ☐ Type for IDs?
+  ☐ Ensuring ID unicity (at runtime)?
   ☐ Ensure the constraints of HTML? (even if only at runtime?)
   ☐ Use list for class(es) ?
 
