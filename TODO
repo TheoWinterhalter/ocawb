@@ -20,6 +20,7 @@ HTML:
   ☐ No longer use string for width / height
   ☐ No longer use string for classes
   ✔ Prettify the types @done(2016-04-15 20:23) @project(HTML)
+  ✔ Move ?id to be after global attributes @done(2016-04-15 20:31) @project(HTML)
   ☐ Type for IDs?
   ☐ Ensuring ID unicity (at runtime)?
   ☐ Ensure the constraints of HTML? (even if only at runtime?)

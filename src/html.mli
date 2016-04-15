@@ -56,11 +56,11 @@ type 'a gentag = ?accesskey: char ->
 
 (** The only important types are 'c, content model of the tag, *)
 (** and 'd, content model of its parent  *)
-type ('a,'b,'c,'d) tag =
+type ('a,'b,'c,'d) tag = ?id: string ->
   (('a, 'b, 'c, 'd) element -> 'a) gentag
 
 (** 'b is the content model of the parent *)
-type ('a,'b,'c) void_tag =
+type ('a,'b,'c) void_tag = ?id: string ->
   (unit -> (('a, 'b, 'c, 'b) k, 'b, 'c, 'b) element) gentag
 
 type target =
@@ -73,29 +73,25 @@ type target =
 val text : string -> (('a, 'b, 'c, 'd) k, 'b, 'c, 'd) element
 
 (* All tags (flow and phrasing mixed) *)
-val a : ?id: string ->
-        ?href: string ->
+val a : ?href: string ->
         ?download: string ->
         ?target: target ->
         ('a, 'b, 'c, 'c) tag
-val abbr : ?id:string -> ?title: string -> ('a, 'b, phrasing, phrasing) tag
-val address : ?id:string -> ('a, 'b, flow, flow) tag
+val abbr : ?title: string -> ('a, 'b, phrasing, phrasing) tag
+val address : ('a, 'b, flow, flow) tag
 (* area TODO? *)
-val article : ?id:string -> ('a, 'b, flow, flow) tag
-val aside : ?id:string -> ('a, 'b, flow, flow) tag
+val article : ('a, 'b, flow, flow) tag
+val aside : ('a, 'b, flow, flow) tag
 (* TODO audio *)
-val b : ?id:string -> ('a, 'b, phrasing, phrasing) tag
-val blockquote : ?id: string ->
-                 ?cite: string ->
-                 ('a, 'b, flow, flow) tag
-val br : ?id:string -> ('a, phrasing, 'c) void_tag
+val b : ('a, 'b, phrasing, phrasing) tag
+val blockquote : ?cite: string -> ('a, 'b, flow, flow) tag
+val br : ('a, phrasing, 'c) void_tag
 (* TODO button *)
-val canvas : ?id: string ->
-             ?height: string ->
+val canvas : ?height: string ->
              ?width: string ->
              ('a, 'b, 'c, 'c) tag
-val cite : ?id:string -> ('a, 'b, phrasing, phrasing) tag
-val code : ?id:string -> ('a, 'b, phrasing, phrasing) tag
+val cite : ('a, 'b, phrasing, phrasing) tag
+val code : ('a, 'b, phrasing, phrasing) tag
 (* TODO col *)
 (* TODO colgroup *)
 (* TODO datalist *)
@@ -104,19 +100,19 @@ val code : ?id:string -> ('a, 'b, phrasing, phrasing) tag
 (* TODO details *)
 (* TODO dfn *)
 (* TODO dialog *)
-val div : ?id:string -> ('a, 'b, flow, flow) tag
-val em : ?id:string -> ('a, 'b, phrasing, phrasing) tag
-val footer : ?id:string -> ('a, 'b, flow, flow) tag
-val h1 : ?id:string -> ('a, 'b, phrasing, flow) tag
-val h2 : ?id:string -> ('a, 'b, phrasing, flow) tag
-val h3 : ?id:string -> ('a, 'b, phrasing, flow) tag
-val h4 : ?id:string -> ('a, 'b, phrasing, flow) tag
-val h5 : ?id:string -> ('a, 'b, phrasing, flow) tag
-val h5 : ?id:string -> ('a, 'b, phrasing, flow) tag
-val p : ?id:string -> ('a, 'b, phrasing, flow) tag
+val div : ('a, 'b, flow, flow) tag
+val em : ('a, 'b, phrasing, phrasing) tag
+val footer : ('a, 'b, flow, flow) tag
+val h1 : ('a, 'b, phrasing, flow) tag
+val h2 : ('a, 'b, phrasing, flow) tag
+val h3 : ('a, 'b, phrasing, flow) tag
+val h4 : ('a, 'b, phrasing, flow) tag
+val h5 : ('a, 'b, phrasing, flow) tag
+val h5 : ('a, 'b, phrasing, flow) tag
+val p : ('a, 'b, phrasing, flow) tag
 val close : ((('a, 'b, 'c, 'd) k, 'b, 'c, 'd) element, 'h, 'h, 'b) element
 
-val body : ?id:string -> ('a, 'b, flow, flow) tag
+val body : ('a, 'b, flow, flow) tag
 val body_end : (flow body, flow, 'c, 'd) element
 
 type html

@@ -226,9 +226,9 @@ type 'a gentag = ?accesskey: char ->
                  ?classes: string ->
                  ?contenteditable: bool -> 'a
 
-type ('a,'b,'c,'d) tag =
+type ('a,'b,'c,'d) tag = ?id: string ->
   (('a, 'b, 'c, 'd) element -> 'a) gentag
-type ('a,'b,'c) void_tag =
+type ('a,'b,'c) void_tag = ?id: string ->
   (unit -> (('a, 'b, 'c, 'b) k, 'b, 'c, 'b) element) gentag
 
 let text s (c,h) k =
@@ -240,10 +240,10 @@ let mktag id tag ?accesskey ?classes ?contenteditable elt =
 let voidtag id tag ?accesskey ?classes ?contenteditable () (c,h) k =
   k (({ accesskey ; classes ; contenteditable ; id } , tag) :: c, h)
 
-let a ?id ?href ?download ?target =
+let a ?href ?download ?target ?id =
   mktag id (fun c -> Tag_a ({ href ; download ; target }, c))
 
-let abbr ?id ?title =
+let abbr ?title ?id =
   mktag id (fun c -> Tag_abbr ({ title }, c))
 
 let address ?id =
@@ -258,13 +258,13 @@ let aside ?id =
 let b ?id =
   mktag id (fun c -> Tag_b c)
 
-let blockquote ?id ?cite =
+let blockquote ?cite ?id =
   mktag id (fun c -> Tag_blockquote ({ cite }, c))
 
 let br ?id =
   voidtag id Tag_br
 
-let canvas ?id ?height ?width =
+let canvas ?height ?width ?id =
   mktag id (fun c -> Tag_canvas ({ height ; width }, c))
 
 let cite ?id =
