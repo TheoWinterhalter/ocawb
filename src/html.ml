@@ -127,6 +127,50 @@ let export_a_info i =
    | None -> ""
    | Some v -> " target=\"" ^ (export_target v) ^ "\"")
 
+type preload_behavior =
+  | Preload_none
+  | Preload_metadata
+  | Preload_auto
+
+let export_preload b =
+  match b with
+  | Preload_none -> "none"
+  | Preload_metadata -> "metadata"
+  | Preload_auto -> "auto"
+
+type audio_info = {
+  autoplay : bool ;
+  preload : preload_behavior option ;
+  controls : bool ;
+  loop : bool ;
+  mediagroup : string option ;
+  muted : bool ;
+  src : string option
+}
+
+let export_audio_info i =
+  (match i.autoplay with
+   | false -> ""
+   | true  -> " autoplay") ^
+  (match i.preload with
+   | None -> ""
+   | Some u -> " preload=\"" ^ (export_preload u) ^ "\"") ^
+  (match i.controls with
+   | false -> ""
+   | true  -> " controls") ^
+  (match i.loop with
+   | false -> ""
+   | true  -> " loop") ^
+  (match i.mediagroup with
+   | None -> ""
+   | Some u -> " mediagroup=\"" ^ u ^ "\"") ^
+  (match i.muted with
+   | false -> ""
+   | true -> " muted") ^
+  (match i.src with
+   | None -> ""
+   | Some u -> " src=\"" ^ u ^ "\"")
+
 type abbr_info = {
   title : string option
 }
@@ -199,6 +243,7 @@ type _ body_tag =
   | Tag_address    : flow body                   -> flow     body_tag
   | Tag_article    : flow body                   -> flow     body_tag
   | Tag_aside      : flow body                   -> flow     body_tag
+  | Tag_audio      : audio_info * 'a body        -> 'a       body_tag
   | Tag_b          : phrasing body               -> phrasing body_tag
   | Tag_blockquote : blockquote_info * flow body -> flow     body_tag
   | Tag_br         :                                phrasing body_tag
@@ -254,6 +299,13 @@ let article ?id =
 
 let aside ?id =
   mktag id (fun c -> Tag_aside c)
+
+let audio ?autoplay:(autoplay=false) ?preload ?controls:(controls=false)
+          ?loop:(loop=false) ?mediagroup ?muted:(muted=false) ?src ?id =
+  let attrs = {
+    autoplay ; preload ; controls ; loop ; mediagroup ; muted ; src
+  } in
+  mktag id (fun c -> Tag_audio (attrs, c))
 
 let b ?id =
   mktag id (fun c -> Tag_b c)
@@ -339,6 +391,10 @@ and export_tag : type a. string -> a full_tag -> string
     "<aside" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</aside>\n"
+  | Tag_audio (i,c) ->
+    "<audio" ^ (export_audio_info i) ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</audio>\n"
   | Tag_b c ->
     "<b" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^

@@ -69,6 +69,11 @@ type target =
   | Target_self
   | Target_top
 
+type preload_behavior =
+  | Preload_none
+  | Preload_metadata
+  | Preload_auto
+
 (* Text (normal character data) *)
 val text : string -> (('a, 'b, 'c, 'd) k, 'b, 'c, 'd) element
 
@@ -79,10 +84,16 @@ val a : ?href: string ->
         ('a, 'b, 'c, 'c) tag
 val abbr : ?title: string -> ('a, 'b, phrasing, phrasing) tag
 val address : ('a, 'b, flow, flow) tag
-(* area TODO? *)
 val article : ('a, 'b, flow, flow) tag
 val aside : ('a, 'b, flow, flow) tag
-(* TODO audio *)
+val audio : ?autoplay: bool ->
+            ?preload: preload_behavior ->
+            ?controls : bool ->
+            ?loop : bool ->
+            ?mediagroup : string ->
+            ?muted : bool ->
+            ?src : string ->
+            ('a, 'b, 'c, 'c) tag
 val b : ('a, 'b, phrasing, phrasing) tag
 val blockquote : ?cite: string -> ('a, 'b, flow, flow) tag
 val br : ('a, phrasing, 'c) void_tag

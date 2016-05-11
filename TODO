@@ -28,7 +28,7 @@ HTML:
 
 Missing HTML tags:
   ☐ area
-  ☐ audio
+  ✔ audio @done(2016-05-11 23:11) @project(Missing HTML tags)
   ☐ button
   ☐ col
   ☐ colgroup
