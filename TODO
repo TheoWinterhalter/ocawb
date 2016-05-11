@@ -130,3 +130,7 @@ Global Attributes:
   ☐ title (=> remove from abbr)
   ☐ translates
   ☐ Complete the list with event attributes ?
+
+Functionalities:
+  ☐ Handle multi-file export
+  ☐ Start doing side-winged document as an example (this will make it easier to chose what to implement)
