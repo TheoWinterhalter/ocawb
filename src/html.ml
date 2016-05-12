@@ -434,27 +434,27 @@ and export_tag : type a. string -> a full_tag -> string
   | Tag_h1 c ->
     "<h1" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
-    indent ^ "</h1>"
+    indent ^ "</h1>\n"
   | Tag_h2 c ->
     "<h2" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
-    indent ^ "</h2>"
+    indent ^ "</h2>\n"
   | Tag_h3 c ->
     "<h3" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
-    indent ^ "</h3>"
+    indent ^ "</h3>\n"
   | Tag_h4 c ->
     "<h4" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
-    indent ^ "</h4>"
+    indent ^ "</h4>\n"
   | Tag_h5 c ->
     "<h5" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
-    indent ^ "</h5>"
+    indent ^ "</h5>\n"
   | Tag_h6 c ->
     "<h6" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
-    indent ^ "</h6>"
+    indent ^ "</h6>\n"
   | Tag_p c ->
     "<p" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
