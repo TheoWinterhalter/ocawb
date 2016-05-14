@@ -259,6 +259,8 @@ type _ body_tag =
   | Tag_h4         : phrasing body               -> flow     body_tag
   | Tag_h5         : phrasing body               -> flow     body_tag
   | Tag_h6         : phrasing body               -> flow     body_tag
+  | Tag_main       : flow body                   -> flow     body_tag
+  | Tag_nav        : flow body                   -> flow     body_tag
   | Tag_p          : phrasing body               -> flow     body_tag
 
 and 'a body = 'a full_tag list
@@ -351,6 +353,12 @@ let h5 ?id =
 
 let h6 ?id =
   mktag id (fun c -> Tag_h6 c)
+
+let main ?id =
+  mktag id (fun c -> Tag_main c)
+
+let nav ?id =
+  mktag id (fun c -> Tag_nav c)
 
 let p ?id =
   mktag id (fun c -> Tag_p c)
@@ -455,6 +463,14 @@ and export_tag : type a. string -> a full_tag -> string
     "<h6" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^
     indent ^ "</h6>\n"
+  | Tag_main c ->
+    "<main" ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</main>\n"
+  | Tag_nav c ->
+    "<nav" ^ (export_generic_attr attr) ^ ">\n" ^
+    (export_content (indent ^ tab) c) ^
+    indent ^ "</nav>\n"
   | Tag_p c ->
     "<p" ^ (export_generic_attr attr) ^ ">\n" ^
     (export_content (indent ^ tab) c) ^

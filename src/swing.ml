@@ -7,11 +7,6 @@ let swing_head =
     ~links:[link ~href:"style.css" ~rel:Rel_stylesheet ()]
     ~title: "Side Winged Document Instance" ()
 
-(* To make up for the missing tags *)
-let nav = div
-let aside = div
-let main = div
-
 (* STRUCTURE *)
 let swing_body =
   body

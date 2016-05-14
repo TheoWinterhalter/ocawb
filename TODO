@@ -68,13 +68,13 @@ Missing HTML tags:
   ☐ legend
   ☐ li
   ☐ link
-  ☐ main
+  ✔ main @done(2016-05-14 10:30) @project(Missing HTML tags)
   ☐ map
   ☐ mark
   ☐ menu
   ☐ menuitem
   ☐ meter
-  ☐ nav
+  ✔ nav @done(2016-05-14 10:30) @project(Missing HTML tags)
   ☐ noscript
   ☐ object
   ☐ ol

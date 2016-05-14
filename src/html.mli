@@ -97,20 +97,11 @@ val audio : ?autoplay: bool ->
 val b : ('a, 'b, phrasing, phrasing) tag
 val blockquote : ?cite: string -> ('a, 'b, flow, flow) tag
 val br : ('a, phrasing, 'c) void_tag
-(* TODO button *)
 val canvas : ?height: string ->
              ?width: string ->
              ('a, 'b, 'c, 'c) tag
 val cite : ('a, 'b, phrasing, phrasing) tag
 val code : ('a, 'b, phrasing, phrasing) tag
-(* TODO col *)
-(* TODO colgroup *)
-(* TODO datalist *)
-(* TODO dd *)
-(* TODO del *)
-(* TODO details *)
-(* TODO dfn *)
-(* TODO dialog *)
 val div : ('a, 'b, flow, flow) tag
 val em : ('a, 'b, phrasing, phrasing) tag
 val footer : ('a, 'b, flow, flow) tag
@@ -121,6 +112,8 @@ val h4 : ('a, 'b, phrasing, flow) tag
 val h5 : ('a, 'b, phrasing, flow) tag
 val h5 : ('a, 'b, phrasing, flow) tag
 val p : ('a, 'b, phrasing, flow) tag
+val main : ('a, 'b, flow, flow) tag
+val nav : ('a, 'b, flow, flow) tag
 val close : ((('a, 'b, 'c, 'd) k, 'b, 'c, 'd) element, 'h, 'h, 'b) element
 
 val body : ('a, 'b, flow, flow) tag
