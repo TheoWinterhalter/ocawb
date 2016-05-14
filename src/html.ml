@@ -370,111 +370,97 @@ let body ?id = mktag id (fun c -> assert false)
 
 let body_end (c,_) = c
 
+(** Export **)
+
+let export_tag_prim indent name info attr content =
+  Printf.sprintf
+    "%s<%s%s%s>\n%s%s</%s>\n"
+    indent
+    name
+    info
+    (export_generic_attr attr)
+    content
+    indent
+    name
+
 let rec export_content : type a. string -> a body -> string
 = fun indent content ->
   List.fold_left (fun a b -> a ^ (export_tag indent b)) "" (List.rev content)
 
-(* TODO Make a generic function? *)
 and export_tag : type a. string -> a full_tag -> string
-= fun indent (attr,tag) -> indent ^
+= fun indent (attr,tag) ->
   match tag with
-  | Text s -> s ^ "\n"
+  | Text s -> indent ^ s ^ "\n"
   | Tag_a (i,c) ->
-    "<a" ^ (export_a_info i) ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</a>\n"
+    export_tag_prim indent "a" (export_a_info i) attr
+                    (export_content (indent ^ tab) c)
   | Tag_abbr (i,c) ->
-    "<abbr" ^ (export_abbr_info i) ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</abbr>\n"
+    export_tag_prim indent "abbr" (export_abbr_info i) attr
+                    (export_content (indent ^ tab) c)
   | Tag_address c ->
-    "<address" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</address>\n"
+    export_tag_prim indent "address" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_article c ->
-    "<article" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</article>\n"
+    export_tag_prim indent "article" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_aside c ->
-    "<aside" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</aside>\n"
+    export_tag_prim indent "aside" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_audio (i,c) ->
-    "<audio" ^ (export_audio_info i) ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</audio>\n"
+    export_tag_prim indent "audio" (export_audio_info i) attr
+                    (export_content (indent ^ tab) c)
   | Tag_b c ->
-    "<b" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</b>\n"
+    export_tag_prim indent "b" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_blockquote (i,c) ->
-    "<blockquote" ^
-      (export_blockquote_info i) ^
-      (export_generic_attr attr) ^
-    ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</blockquote>\n"
-  | Tag_br -> "<br" ^ (export_generic_attr attr) ^ " />\n"
+    export_tag_prim indent "blockquote" (export_blockquote_info i) attr
+                    (export_content (indent ^ tab) c)
+  | Tag_br -> indent ^ "<br" ^ (export_generic_attr attr) ^ " />\n"
   | Tag_canvas (i,c) ->
-    "<canvas" ^ (export_canvas_info i) ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</canvas>\n"
+    export_tag_prim indent "canvas" (export_canvas_info i) attr
+                    (export_content (indent ^ tab) c)
   | Tag_cite c ->
-    "<cite" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</cite>\n"
+    export_tag_prim indent "cite" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_code c ->
-    "<code" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</code>\n"
+    export_tag_prim indent "code" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_div c ->
-    "<div" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</div>\n"
+    export_tag_prim indent "div" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_em c ->
-    "<em" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</em>\n"
+    export_tag_prim indent "em" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_footer c ->
-    "<footer" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</footer>\n"
+    export_tag_prim indent "footer" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_h1 c ->
-    "<h1" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</h1>\n"
+    export_tag_prim indent "h1" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_h2 c ->
-    "<h2" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</h2>\n"
+    export_tag_prim indent "h2" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_h3 c ->
-    "<h3" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</h3>\n"
+    export_tag_prim indent "h3" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_h4 c ->
-    "<h4" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</h4>\n"
+    export_tag_prim indent "h4" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_h5 c ->
-    "<h5" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</h5>\n"
+    export_tag_prim indent "h5" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_h6 c ->
-    "<h6" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</h6>\n"
+    export_tag_prim indent "h6" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_main c ->
-    "<main" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</main>\n"
+    export_tag_prim indent "main" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_nav c ->
-    "<nav" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</nav>\n"
+    export_tag_prim indent "nav" "" attr
+                    (export_content (indent ^ tab) c)
   | Tag_p c ->
-    "<p" ^ (export_generic_attr attr) ^ ">\n" ^
-    (export_content (indent ^ tab) c) ^
-    indent ^ "</p>\n"
+    export_tag_prim indent "p" "" attr
+                    (export_content (indent ^ tab) c)
 
 let export_body body =
   tab ^ "<body>\n" ^
