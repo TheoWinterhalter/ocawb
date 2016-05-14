@@ -1,0 +1,81 @@
+/* General */
+
+html {
+  font-size: 62.5%;
+  font-family: 'Open Sans', Robotto, Helvetica, sans-serif;
+  min-height: 100%;
+}
+
+body {
+  background: rgb(225, 232, 237);
+  font-size: 1.5rem;
+  padding: 0;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+h2, h3, h4, h5, h6 {
+  margin-top: 5pt;
+}
+
+a {
+  color: rgb(67, 132, 185);
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(85, 168, 236);
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul ul {
+  padding-left: 5pt;
+}
+
+table td {
+  padding: 2pt 8pt 2pt 0;
+}
+
+/* Nav */
+
+nav {
+  z-index: 2;
+  background-color: rgb(226, 168, 56);
+  width: calc(50% - 300pt);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Aside */
+
+aside {
+  z-index: 1;
+  background-color: rgb(147, 185, 207);
+  width: calc(50% - 300pt);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Main */
+
+main {
+  width: 600pt;
+  margin: auto;
+  background: rgb(255, 252, 255);
+}

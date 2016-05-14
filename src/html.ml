@@ -61,15 +61,18 @@ let export_rel r =
 type link = {
   href  : string option ;
   media : media option ;
+  mimetype : string option ;
   rel   : rel_value
 }
 
 let link ?href
          ?media
+         ?mimetype
          ~rel ()
 = {
   href ;
   media ;
+  mimetype ;
   rel
 }
 
@@ -79,6 +82,9 @@ let export_link indent link =
   (match link.media with
    | None -> ""
    | Some m -> " media=\"" ^ (export_media m) ^ "\"") ^
+  (match link.mimetype with
+   | None -> ""
+   | Some m -> " type=\"" ^ m ^ "\"") ^
   " rel=\"" ^ (export_rel link.rel) ^ "\"" ^
   ">\n"
 

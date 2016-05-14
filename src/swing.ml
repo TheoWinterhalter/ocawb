@@ -4,7 +4,11 @@ open Html
 (* HEAD *)
 let swing_head =
   head
-    ~links:[link ~href:"style.css" ~rel:Rel_stylesheet ()]
+    ~links:[
+      link ~href:"layout.css" ~rel:Rel_stylesheet () ;
+      link ~href:"https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"
+           ~rel:Rel_stylesheet ~mimetype:"text/css" ()
+    ]
     ~title: "Side Winged Document Instance" ()
 
 (* STRUCTURE *)
@@ -28,7 +32,11 @@ let swing_body =
       (h3
         (text "Body of the text.")
       close)
-      (text "It is the main content of the document.")
+      (p
+        (text "It is the main content of the document.")
+        (* (br ()) *)
+        (text "Please keep in mind it's really early work in progress.")
+      close)
     close)
   body_end
 

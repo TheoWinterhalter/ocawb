@@ -22,7 +22,7 @@ let my_html =
             (text "This is just for show but we also put anchors in anchors.")
             (text "Isn't that all nice? ")
             (br ())
-            (abbr ~title:"Oh My God"
+            (abbr ~title:"Oh My Gosh"
               (text "OMG")
             close)
           close)

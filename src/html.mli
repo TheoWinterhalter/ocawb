@@ -27,8 +27,9 @@ type rel_value =
   (* Are the others necessary? *)
 
 type link
-val link : ?href:  string -> (* Some better idea? *)
+val link : ?href:  string ->
            ?media: media ->
+           ?mimetype: string ->
            rel:    rel_value ->
            unit -> link
 
